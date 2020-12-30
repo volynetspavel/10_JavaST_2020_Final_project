@@ -1,0 +1,11 @@
+CREATE DATABASE `edem_db` DEFAULT CHARACTER SET utf8;
+
+GRANT SELECT,INSERT,UPDATE,DELETE
+ON `edem_db`.*
+TO edem_user@localhost
+IDENTIFIED BY 'password1111';
+
+GRANT SELECT,INSERT,UPDATE,DELETE
+ON `edem_db`.*
+TO edem_user@'%'
+IDENTIFIED BY 'password1111';
