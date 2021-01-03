@@ -7,18 +7,9 @@ package com.volynets.edem.entity;
  * @version 1.0
  */
 public class User extends AbstractEntity {
-	private Account account;
 	private String email;
 	private String password;
 	private Role role;
-
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
-	}
 
 	public String getEmail() {
 		return email;

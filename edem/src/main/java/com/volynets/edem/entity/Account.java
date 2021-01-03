@@ -7,9 +7,18 @@ package com.volynets.edem.entity;
  * @version 1.0
  */
 public class Account extends AbstractEntity {
+	private User user;
 	private String surname;
 	private String name;
 	private String avatar;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public String getSurname() {
 		return surname;
