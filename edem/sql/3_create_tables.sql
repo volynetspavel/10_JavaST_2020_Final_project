@@ -6,6 +6,7 @@ CREATE TABLE `account` (
   `name` varchar(45) NOT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
+  CONSTRAINT `fkk_user` FOREIGN KEY (`id`) REFERENCES `edem_db`.`user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `action` (
@@ -64,5 +65,4 @@ CREATE TABLE `user` (
   `role` enum('USER','ADMINISTRATOR') NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
-  CONSTRAINT `fkk_account` FOREIGN KEY (`id`) REFERENCES `account` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
