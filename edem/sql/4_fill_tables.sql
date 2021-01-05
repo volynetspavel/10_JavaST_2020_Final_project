@@ -301,7 +301,7 @@ VALUES
 INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
-(10,4,2,5,4);
+(10,1,2,5,1);
 
 
 INSERT INTO edem_db.user 

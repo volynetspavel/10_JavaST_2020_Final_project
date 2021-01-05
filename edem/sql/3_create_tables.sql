@@ -53,9 +53,9 @@ CREATE TABLE `usage` (
   KEY `fk_action_idx` (`id_action`),
   KEY `fk_account_idx` (`id_account`),
   KEY `fk_animal_idx` (`id_animal`),
-  CONSTRAINT `fk_usage_account` FOREIGN KEY (`id_account`) REFERENCES `account` (`id`),
-  CONSTRAINT `fk_usage_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id`),
-  CONSTRAINT `fk_usage_animal` FOREIGN KEY (`id_animal`) REFERENCES `animal` (`id`)
+  CONSTRAINT `fk_usage_account` FOREIGN KEY (`id_account`) REFERENCES `account` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_usage_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_usage_animal` FOREIGN KEY (`id_animal`) REFERENCES `animal` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user` (
