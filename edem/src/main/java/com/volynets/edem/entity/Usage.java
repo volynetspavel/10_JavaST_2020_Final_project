@@ -1,5 +1,7 @@
 package com.volynets.edem.entity;
 
+import java.util.Objects;
+
 /**
  * Usage is a entity of usage.
  * 
@@ -42,5 +44,39 @@ public class Usage extends AbstractEntity {
 
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(account, action, reducedCO2, animal);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usage other = (Usage) obj;
+		if (account == null) {
+			if (other.account != null)
+				return false;
+		} else if (!account.equals(other.account))
+			return false;
+		if (action == null) {
+			if (other.action != null)
+				return false;
+		} else if (!action.equals(other.action))
+			return false;
+		if (animal == null) {
+			if (other.animal != null)
+				return false;
+		} else if (!animal.equals(other.animal))
+			return false;
+		if (reducedCO2 != other.reducedCO2)
+			return false;
+		return true;
 	}
 }

@@ -1,5 +1,7 @@
 package com.volynets.edem.entity;
 
+import java.util.Objects;
+
 /**
  * Action is a entity of action.
  * 
@@ -62,4 +64,44 @@ public class Action extends AbstractEntity {
 		this.co2 = co2;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(title, logo, desc, content, comments, co2);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Action other = (Action) obj;
+		if (co2 != other.co2)
+			return false;
+		if (comments != other.comments)
+			return false;
+		if (content == null) {
+			if (other.content != null)
+				return false;
+		} else if (!content.equals(other.content))
+			return false;
+		if (desc == null) {
+			if (other.desc != null)
+				return false;
+		} else if (!desc.equals(other.desc))
+			return false;
+		if (logo == null) {
+			if (other.logo != null)
+				return false;
+		} else if (!logo.equals(other.logo))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
 }

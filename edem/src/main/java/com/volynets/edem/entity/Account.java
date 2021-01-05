@@ -1,5 +1,7 @@
 package com.volynets.edem.entity;
 
+import java.util.Objects;
+
 /**
  * Account is a entity of account.
  * 
@@ -50,5 +52,42 @@ public class Account extends AbstractEntity {
 
 	public String getNoAvatar() {
 		return "/img/avatar/no_avatar.png";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, surname, avatar, user);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		if (avatar == null) {
+			if (other.avatar != null)
+				return false;
+		} else if (!avatar.equals(other.avatar))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (surname == null) {
+			if (other.surname != null)
+				return false;
+		} else if (!surname.equals(other.surname))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
 	}
 }

@@ -1,5 +1,7 @@
 package com.volynets.edem.entity;
 
+import java.util.Objects;
+
 /**
  * User is a entity of user.
  * 
@@ -33,5 +35,34 @@ public class User extends AbstractEntity {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, password, role);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (role != other.role)
+			return false;
+		return true;
 	}
 }

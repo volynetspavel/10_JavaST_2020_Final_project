@@ -1,6 +1,7 @@
 package com.volynets.edem.entity;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 /**
  * Comment is a entity of comment.
@@ -44,5 +45,42 @@ public class Comment extends AbstractEntity {
 
 	public void setAction(Action action) {
 		this.action = action;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(account, action, content, created);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Comment other = (Comment) obj;
+		if (account == null) {
+			if (other.account != null)
+				return false;
+		} else if (!account.equals(other.account))
+			return false;
+		if (action == null) {
+			if (other.action != null)
+				return false;
+		} else if (!action.equals(other.action))
+			return false;
+		if (content == null) {
+			if (other.content != null)
+				return false;
+		} else if (!content.equals(other.content))
+			return false;
+		if (created == null) {
+			if (other.created != null)
+				return false;
+		} else if (!created.equals(other.created))
+			return false;
+		return true;
 	}
 }
