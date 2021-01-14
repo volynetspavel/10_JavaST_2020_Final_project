@@ -10,7 +10,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.volynets.edem.connection.ConnectionPool;
+import com.volynets.edem.dao.AccountDao;
 import com.volynets.edem.dao.UserDao;
+import com.volynets.edem.dao.transaction.EntityTransaction;
+import com.volynets.edem.entity.Account;
+import com.volynets.edem.entity.Role;
 import com.volynets.edem.entity.User;
 import com.volynets.edem.exception.DaoException;
 import com.volynets.edem.exception.ServiceException;
@@ -33,10 +37,55 @@ public class UserServiceImpl extends AbstractService implements UserService {
 	}
 
 	@Override
+	public void registration(String surname, String name, String avatar, String email, String password)
+			throws ServiceException {
+		EntityTransaction transaction = new EntityTransaction();
+		AccountDao accountDao = daoFactory.getAccountDao();
+
+		User newUser = new User();
+		Account newAccount = new Account();
+		String hashPassword = md5(password);
+		
+		try {
+			transaction.initTransaction(userDao, accountDao);
+
+			newUser.setEmail(email);
+			newUser.setRole(Role.USER);
+			newUser.setPassword(hashPassword);
+
+			userDao.insert(newUser);
+			User user = userDao.findByEmailAndPass(email, hashPassword).get(0);
+
+			newAccount.setSurname(surname);
+			newAccount.setName(name);
+			newAccount.setAvatar(avatar);
+			newAccount.setUser(user);
+
+			accountDao.insert(newAccount);
+
+			transaction.commit();
+		} catch (DaoException e) {
+			try {
+				transaction.rollback();
+			} catch (DaoException e1) {
+				throw new ServiceException(e);
+			}
+			throw new ServiceException(e);
+		} finally {
+			try {
+				transaction.endTransaction();
+			} catch (DaoException e) {
+				throw new ServiceException(e);
+			}
+		}
+	}
+
+	@Override
 	public List<User> findByEmailAndPass(String email, String password) throws ServiceException {
 		Connection connection = ConnectionPool.getInstance().takeConnection();
 		userDao.setConnection(connection);
 		List<User> users = null;
+		
 		try {
 			users = userDao.findByEmailAndPass(email, md5(password));
 		} catch (DaoException e) {
@@ -62,7 +111,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
 	}
-	
+
 	@Override
 	public boolean containsEmail(String email) throws ServiceException {
 		Connection connection = ConnectionPool.getInstance().takeConnection();
@@ -93,5 +142,38 @@ public class UserServiceImpl extends AbstractService implements UserService {
 		} catch (NoSuchAlgorithmException e) {
 			return null;
 		}
+	}
+
+	@Override
+	public User findByEmail(String email) throws ServiceException {
+		Connection connection = ConnectionPool.getInstance().takeConnection();
+		userDao.setConnection(connection);
+		User user = null;
+		
+		try {
+			user = userDao.findByEmail(email);
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+		return user;
+	}
+
+	@Override
+	public List<User> findAll() throws ServiceException {
+		Connection connection = ConnectionPool.getInstance().takeConnection();
+		userDao.setConnection(connection);
+		List<User> users = null;
+		
+		try {
+			users = userDao.findAll();
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+
+		return users;
 	}
 }

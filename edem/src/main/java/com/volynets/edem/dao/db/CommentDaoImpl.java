@@ -30,8 +30,13 @@ public class CommentDaoImpl extends CommentDao {
 	private static final String SQL_DELETE_COMMENT = "DELETE FROM edem_db.comment WHERE id=?";
 	private static final String SQL_UPDATE_COMMENT = "UPDATE edem_db.comment "
 			+ "SET `content`=?, `created`=?, `id_account`=?, `id_action`=? WHERE id=?";
-    private static final String SQL_INSERT_COMMENT = "INSERT into edem_db.comment "
+    private static final String SQL_INSERT_COMMENT = "INSERT into edem_db. "
     		+ "(`content`,`created`,`id_account`,`id_action`) VALUES (?, ?, ?, ?)";
+    private static final String SQL_DELETE_COMMENT_BY_ID_ACCOUNT = "DELETE FROM edem_db.comment "
+    		+ "WHERE id_account=?";
+    private static final String SQL_DELETE_COMMENT_BY_ID_ACTION = "DELETE FROM edem_db.comment "
+    		+ "WHERE id_action=?";
+    
 
 	@Override
 	public void insert(Comment entity) throws DaoException {
@@ -167,5 +172,38 @@ public class CommentDaoImpl extends CommentDao {
 		closeResultSet(resultSet);
 		closePreparedStatement(preparedStatement);
 		return comments;
+	}
+
+	@Override
+	public void deleteByIdAccount(int idAccount) throws DaoException {
+		PreparedStatement preparedStatement = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_DELETE_COMMENT_BY_ID_ACCOUNT);
+			preparedStatement.setInt(1, idAccount);
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			closePreparedStatement(preparedStatement);
+		}
+	}
+
+	@Override
+	public void deleteByIdAction(int idAction) throws DaoException {
+		PreparedStatement preparedStatement = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_DELETE_COMMENT_BY_ID_ACTION);
+			preparedStatement.setInt(1, idAction);
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			closePreparedStatement(preparedStatement);
+		}
+		
 	}
 }

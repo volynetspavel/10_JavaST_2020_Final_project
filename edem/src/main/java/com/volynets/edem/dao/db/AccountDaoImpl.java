@@ -10,8 +10,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.volynets.edem.connection.ConnectionPool;
-import com.volynets.edem.dao.AbstractDao;
 import com.volynets.edem.dao.AccountDao;
+import com.volynets.edem.dao.UserDao;
+import com.volynets.edem.dao.factory.DAOFactory;
 import com.volynets.edem.entity.Account;
 import com.volynets.edem.entity.User;
 import com.volynets.edem.exception.DaoException;
@@ -97,10 +98,11 @@ public class AccountDaoImpl extends AccountDao {
 
 	@Override
 	public Account findById(int id) throws DaoException {
-		AbstractDao<User> userDao = new UserDaoImpl();
+		DAOFactory daoFactory = DAOFactory.getInstance();
+		UserDao userDao = daoFactory.getUserDao();
 		userDao.setConnection(connection);
 
-		Account account = new Account();
+		Account account = null;
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -112,6 +114,7 @@ public class AccountDaoImpl extends AccountDao {
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
+				account = new Account();
 				User user = userDao.findById(id);
 				account.setUser(user);
 
@@ -129,13 +132,13 @@ public class AccountDaoImpl extends AccountDao {
 		}
 		closeResultSet(resultSet);
 		closePreparedStatement(preparedStatement);
-		ConnectionPool.getInstance().returnConnection(connection);
 		return account;
 	}
 
 	@Override
 	public List<Account> findAll() throws DaoException {
-		AbstractDao<User> userDao = new UserDaoImpl();
+		DAOFactory daoFactory = DAOFactory.getInstance();
+		UserDao userDao = daoFactory.getUserDao();
 		userDao.setConnection(connection);
 
 		List<Account> accounts = new ArrayList<Account>();
@@ -169,7 +172,6 @@ public class AccountDaoImpl extends AccountDao {
 		}
 		closeResultSet(resultSet);
 		closePreparedStatement(preparedStatement);
-		ConnectionPool.getInstance().returnConnection(connection);
 		return accounts;
 	}
 }

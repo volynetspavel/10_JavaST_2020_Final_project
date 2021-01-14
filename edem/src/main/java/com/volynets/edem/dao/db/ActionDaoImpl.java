@@ -27,29 +27,29 @@ public class ActionDaoImpl extends ActionDao {
 	private static final String SQL_DELETE_ACTION = "DELETE FROM edem_db.action WHERE id=?";
 	private static final String SQL_UPDATE_ACTION = "UPDATE edem_db.action "
 			+ "SET `title`=?, `desc`=?, `content`=?, `logo`=?, `comment`=?, co2=? WHERE id=?";
-    private static final String SQL_INSERT_ACTION = "INSERT into edem_db.action "
-    		+ "(`title`,`desc`,`content`,`logo`,`comment`,`co2`) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String SQL_INSERT_ACTION = "INSERT into edem_db.action "
+			+ "(`title`,`desc`,`content`,`logo`,`comment`,`co2`) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String SQL_FIND_ACTION_BY_NAME = "SELECT * FROM edem_db.action WHERE title=?";
 
 	@Override
 	public void insert(Action entity) throws DaoException {
-        PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement = null;
 
-        try {
-            preparedStatement = connection.prepareStatement(SQL_INSERT_ACTION);
-			preparedStatement.setInt(1, entity.getId());
-			preparedStatement.setString(2, entity.getTitle());
-			preparedStatement.setString(3, entity.getDesc());
-			preparedStatement.setString(4, entity.getContent());
-			preparedStatement.setString(5, entity.getLogo());
-			preparedStatement.setInt(6, entity.getComments());
-			preparedStatement.setInt(7, entity.getCo2());
+		try {
+			preparedStatement = connection.prepareStatement(SQL_INSERT_ACTION);
+			preparedStatement.setString(1, entity.getTitle());
+			preparedStatement.setString(2, entity.getDesc());
+			preparedStatement.setString(3, entity.getContent());
+			preparedStatement.setString(4, entity.getLogo());
+			preparedStatement.setInt(5, entity.getComments());
+			preparedStatement.setInt(6, entity.getCo2());
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        } finally {
-            closePreparedStatement(preparedStatement);
-        }
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			closePreparedStatement(preparedStatement);
+		}
 	}
 
 	@Override
@@ -58,13 +58,13 @@ public class ActionDaoImpl extends ActionDao {
 
 		try {
 			preparedStatement = connection.prepareStatement(SQL_UPDATE_ACTION);
-			preparedStatement.setInt(1, entity.getId());
-			preparedStatement.setString(2, entity.getTitle());
-			preparedStatement.setString(3, entity.getDesc());
-			preparedStatement.setString(4, entity.getContent());
-			preparedStatement.setString(5, entity.getLogo());
-			preparedStatement.setInt(6, entity.getComments());
-			preparedStatement.setInt(7, entity.getCo2());
+			preparedStatement.setString(1, entity.getTitle());
+			preparedStatement.setString(2, entity.getDesc());
+			preparedStatement.setString(3, entity.getContent());
+			preparedStatement.setString(4, entity.getLogo());
+			preparedStatement.setInt(5, entity.getComments());
+			preparedStatement.setInt(6, entity.getCo2());
+			preparedStatement.setInt(7, entity.getId());
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -81,7 +81,7 @@ public class ActionDaoImpl extends ActionDao {
 		try {
 			preparedStatement = connection.prepareStatement(SQL_DELETE_ACTION);
 			preparedStatement.setInt(1, id);
-			
+
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(e);
@@ -92,7 +92,7 @@ public class ActionDaoImpl extends ActionDao {
 
 	@Override
 	public Action findById(int id) throws DaoException {
-		Action action = new Action();
+		Action action = null;
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -100,10 +100,11 @@ public class ActionDaoImpl extends ActionDao {
 		try {
 			preparedStatement = connection.prepareStatement(SQL_FIND_ACTION_BY_ID);
 			preparedStatement.setInt(1, id);
-			
+
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
+				action = new Action();
 				action.setId(resultSet.getInt(1));
 				action.setTitle(resultSet.getString(2));
 				action.setDesc(resultSet.getString(3));
@@ -150,5 +151,35 @@ public class ActionDaoImpl extends ActionDao {
 		closeResultSet(resultSet);
 		closePreparedStatement(preparedStatement);
 		return actions;
+	}
+
+	@Override
+	public Action findByTitle(String name) throws DaoException {
+		Action action = new Action();
+
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_FIND_ACTION_BY_NAME);
+			preparedStatement.setString(1, name);
+
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				action.setId(resultSet.getInt(1));
+				action.setTitle(resultSet.getString(2));
+				action.setDesc(resultSet.getString(3));
+				action.setContent(resultSet.getString(4));
+				action.setLogo(resultSet.getString(5));
+				action.setComments(resultSet.getInt(6));
+				action.setCo2(resultSet.getInt(7));
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}
+		closeResultSet(resultSet);
+		closePreparedStatement(preparedStatement);
+		return action;
 	}
 }

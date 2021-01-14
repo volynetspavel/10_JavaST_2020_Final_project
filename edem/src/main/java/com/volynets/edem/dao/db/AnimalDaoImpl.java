@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import com.volynets.edem.dao.AnimalDao;
 import com.volynets.edem.entity.Animal;
 import com.volynets.edem.exception.DaoException;
+import com.volynets.edem.exception.ServiceException;
 
 /**
  * This class is an implementation of AnimalDao.
@@ -27,27 +28,28 @@ public class AnimalDaoImpl extends AnimalDao {
 	private static final String SQL_DELETE_ANIMAL = "DELETE FROM edem_db.animal WHERE id=?";
 	private static final String SQL_UPDATE_ANIMAL = "UPDATE edem_db.animal "
 			+ "SET `name`=?, `desc`=?, `content`=?, `logo`=?, `co2`=? WHERE id=?";
-    private static final String SQL_INSERT_ANIMAL = "INSERT INTO edem_db.animal "
-    		+ "(`name`,`desc`,`content`,`logo`,`co2`) VALUES (?, ?, ?, ?, ?)";
+	private static final String SQL_INSERT_ANIMAL = "INSERT INTO edem_db.animal "
+			+ "(`name`,`desc`,`content`,`logo`,`co2`) VALUES (?, ?, ?, ?, ?)";
+	private static final String SQL_FIND_ANIMAL_BY_NAME = "SELECT * FROM edem_db.animal WHERE name=?";
 
-    @Override
+	@Override
 	public void insert(Animal entity) throws DaoException {
-        PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement = null;
 
-        try {
-            preparedStatement = connection.prepareStatement(SQL_INSERT_ANIMAL);
+		try {
+			preparedStatement = connection.prepareStatement(SQL_INSERT_ANIMAL);
 			preparedStatement.setString(1, entity.getName());
 			preparedStatement.setString(2, entity.getDesc());
 			preparedStatement.setString(3, entity.getContent());
 			preparedStatement.setString(4, entity.getLogo());
 			preparedStatement.setInt(5, entity.getCo2());
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        } finally {
-            closePreparedStatement(preparedStatement);
-        }
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			closePreparedStatement(preparedStatement);
+		}
 	}
 
 	@Override
@@ -56,12 +58,12 @@ public class AnimalDaoImpl extends AnimalDao {
 
 		try {
 			preparedStatement = connection.prepareStatement(SQL_UPDATE_ANIMAL);
-			preparedStatement.setInt(6, entity.getId());
 			preparedStatement.setString(1, entity.getName());
 			preparedStatement.setString(2, entity.getDesc());
 			preparedStatement.setString(3, entity.getContent());
 			preparedStatement.setString(4, entity.getLogo());
 			preparedStatement.setInt(5, entity.getCo2());
+			preparedStatement.setInt(6, entity.getId());
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -78,7 +80,7 @@ public class AnimalDaoImpl extends AnimalDao {
 		try {
 			preparedStatement = connection.prepareStatement(SQL_DELETE_ANIMAL);
 			preparedStatement.setInt(1, id);
-			
+
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(e);
@@ -89,7 +91,7 @@ public class AnimalDaoImpl extends AnimalDao {
 
 	@Override
 	public Animal findById(int id) throws DaoException {
-		Animal animal = new Animal();
+		Animal animal = null;
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -97,10 +99,11 @@ public class AnimalDaoImpl extends AnimalDao {
 		try {
 			preparedStatement = connection.prepareStatement(SQL_FIND_ANIMAL_BY_ID);
 			preparedStatement.setInt(1, id);
-			
+
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
+				animal = new Animal();
 				animal.setId(resultSet.getInt(1));
 				animal.setName(resultSet.getString(2));
 				animal.setDesc(resultSet.getString(3));
@@ -145,5 +148,34 @@ public class AnimalDaoImpl extends AnimalDao {
 		closeResultSet(resultSet);
 		closePreparedStatement(preparedStatement);
 		return animals;
+	}
+
+	@Override
+	public Animal findByName(String name) throws DaoException {
+		Animal animal = new Animal();
+
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_FIND_ANIMAL_BY_NAME);
+			preparedStatement.setString(1, name);
+
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				animal.setId(resultSet.getInt(1));
+				animal.setName(resultSet.getString(2));
+				animal.setDesc(resultSet.getString(3));
+				animal.setContent(resultSet.getString(4));
+				animal.setLogo(resultSet.getString(5));
+				animal.setCo2(resultSet.getInt(6));
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}
+		closeResultSet(resultSet);
+		closePreparedStatement(preparedStatement);
+		return animal;
 	}
 }

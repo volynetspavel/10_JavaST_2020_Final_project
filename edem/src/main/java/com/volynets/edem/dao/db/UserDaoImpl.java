@@ -89,7 +89,7 @@ public class UserDaoImpl extends UserDao {
 
 	@Override
 	public User findById(int id) throws DaoException {
-		User user = new User();
+		User user = null;
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -101,6 +101,7 @@ public class UserDaoImpl extends UserDao {
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
+				user = new User();
 				user.setId(resultSet.getInt(1));
 				user.setEmail(resultSet.getString(2));
 				user.setPassword(resultSet.getString(3));
@@ -200,4 +201,34 @@ public class UserDaoImpl extends UserDao {
 			closePreparedStatement(preparedStatement);
 		}
 	}
+
+	@Override
+	public User findByEmail(String email) throws DaoException {
+		User user = new User();
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_EMAIL);
+			preparedStatement.setString(1, email);
+
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				user.setId(resultSet.getInt(1));
+				user.setEmail(resultSet.getString(2));
+				user.setPassword(resultSet.getString(3));
+				user.setRole(Role.valueOf(resultSet.getString(4)));
+
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}
+		closeResultSet(resultSet);
+		closePreparedStatement(preparedStatement);
+
+		return user;
+	}
+
 }

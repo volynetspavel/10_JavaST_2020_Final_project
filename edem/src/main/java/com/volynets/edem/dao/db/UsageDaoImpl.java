@@ -14,6 +14,7 @@ import com.volynets.edem.dao.UsageDao;
 import com.volynets.edem.entity.Account;
 import com.volynets.edem.entity.Action;
 import com.volynets.edem.entity.Animal;
+import com.volynets.edem.entity.Role;
 import com.volynets.edem.entity.Usage;
 import com.volynets.edem.exception.DaoException;
 
@@ -31,26 +32,37 @@ public class UsageDaoImpl extends UsageDao {
 	private static final String SQL_DELETE_USAGE = "DELETE FROM edem_db.usage WHERE id=?";
 	private static final String SQL_UPDATE_USAGE = "UPDATE edem_db.usage "
 			+ "SET id_account=?, id_action=?, reducedCO2=?, id_animal=? WHERE id=?";
-    private static final String SQL_INSERT_USAGE = "INSERT into edem_db.usage "
-    		+ "(id_account, id_action, reducedCO2, id_animal) VALUES (?, ?, ?, ?)";
+	private static final String SQL_INSERT_USAGE = "INSERT into edem_db.usage "
+			+ "(id_account, id_action, reducedCO2, id_animal) VALUES (?, ?, ?, ?)";
+
+	private static final String SQL_SUM_CO2_FOR_USER_BY_ANIMAL = "SELECT SUM(reducedCO2) "
+			+ "FROM edem_db.usage WHERE id_account=? AND id_animal=?;";
+    private static final String SQL_DELETE_USAGE_BY_ID_ACCOUNT = "DELETE FROM edem_db.usage "
+    		+ "WHERE id_account=?";
+    private static final String SQL_DELETE_USAGE_BY_ID_ACTION = "DELETE FROM edem_db.usage "
+    		+ "WHERE id_action=?";
+    private static final String SQL_DELETE_USAGE_BY_ID_ANIMAL = "DELETE FROM edem_db.usage "
+    		+ "WHERE id_animal=?";
 
 	@Override
 	public void insert(Usage entity) throws DaoException {
-        PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement = null;
 
-        try {
-            preparedStatement = connection.prepareStatement(SQL_INSERT_USAGE);
+		try {
+			preparedStatement = connection.prepareStatement(SQL_INSERT_USAGE);
 			preparedStatement.setInt(1, entity.getAccount().getUser().getId());
 			preparedStatement.setInt(2, entity.getAction().getId());
 			preparedStatement.setInt(3, entity.getReducedCO2());
 			preparedStatement.setInt(4, entity.getAnimal().getId());
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        } finally {
-            closePreparedStatement(preparedStatement);
-        }
+			System.out.println("UsageDaoImpl before execute - " + connection.getAutoCommit());
+			preparedStatement.executeUpdate();
+			System.out.println("UsageDaoImpl - " + connection.getAutoCommit());
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			closePreparedStatement(preparedStatement);
+		}
 	}
 
 	@Override
@@ -80,7 +92,7 @@ public class UsageDaoImpl extends UsageDao {
 		try {
 			preparedStatement = connection.prepareStatement(SQL_DELETE_USAGE);
 			preparedStatement.setInt(1, id);
-			
+
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException(e);
@@ -97,7 +109,7 @@ public class UsageDaoImpl extends UsageDao {
 		actionDao.setConnection(connection);
 		AbstractDao<Animal> animalDao = new AnimalDaoImpl();
 		animalDao.setConnection(connection);
-		
+
 		Usage usage = new Usage();
 
 		PreparedStatement preparedStatement = null;
@@ -106,22 +118,22 @@ public class UsageDaoImpl extends UsageDao {
 		try {
 			preparedStatement = connection.prepareStatement(SQL_FIND_USAGE_BY_ID);
 			preparedStatement.setInt(1, id);
-			
+
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
 				usage.setId(resultSet.getInt(1));
-				
+
 				int idAccount = resultSet.getInt(2);
 				Account account = accountDao.findById(idAccount);
 				usage.setAccount(account);
-				
+
 				int idAction = resultSet.getInt(3);
 				Action action = actionDao.findById(idAction);
 				usage.setAction(action);
-				
+
 				usage.setReducedCO2(resultSet.getInt(4));
-				
+
 				int idAnimal = resultSet.getInt(5);
 				Animal animal = animalDao.findById(idAnimal);
 				usage.setAnimal(animal);
@@ -142,7 +154,7 @@ public class UsageDaoImpl extends UsageDao {
 		actionDao.setConnection(connection);
 		AbstractDao<Animal> animalDao = new AnimalDaoImpl();
 		animalDao.setConnection(connection);
-		
+
 		List<Usage> usages = new ArrayList<Usage>();
 
 		PreparedStatement preparedStatement = null;
@@ -156,17 +168,17 @@ public class UsageDaoImpl extends UsageDao {
 				Usage usage = new Usage();
 
 				usage.setId(resultSet.getInt(1));
-				
+
 				int idAccount = resultSet.getInt(2);
 				Account account = accountDao.findById(idAccount);
 				usage.setAccount(account);
-				
+
 				int idAction = resultSet.getInt(3);
 				Action action = actionDao.findById(idAction);
 				usage.setAction(action);
-				
+
 				usage.setReducedCO2(resultSet.getInt(4));
-				
+
 				int idAnimal = resultSet.getInt(5);
 				Animal animal = animalDao.findById(idAnimal);
 				usage.setAnimal(animal);
@@ -179,5 +191,79 @@ public class UsageDaoImpl extends UsageDao {
 		closeResultSet(resultSet);
 		closePreparedStatement(preparedStatement);
 		return usages;
+	}
+
+	@Override
+	public int sumCo2ForUser(int idUser, int idAnimal) throws DaoException {
+		int sumCo2 = 0;
+
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_SUM_CO2_FOR_USER_BY_ANIMAL);
+			preparedStatement.setInt(1, idUser);
+			preparedStatement.setInt(2, idAnimal);
+
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				sumCo2 = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}
+		closeResultSet(resultSet);
+		closePreparedStatement(preparedStatement);
+
+		return sumCo2;
+	}
+
+	@Override
+	public void deleteByIdAccount(int idAccount) throws DaoException {
+		PreparedStatement preparedStatement = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_DELETE_USAGE_BY_ID_ACCOUNT);
+			preparedStatement.setInt(1, idAccount);
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			closePreparedStatement(preparedStatement);
+		}
+	}
+
+	@Override
+	public void deleteByIdAction(int idAction) throws DaoException {
+		PreparedStatement preparedStatement = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_DELETE_USAGE_BY_ID_ACTION);
+			preparedStatement.setInt(1, idAction);
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			closePreparedStatement(preparedStatement);
+		}
+	}
+	
+	@Override
+	public void deleteByIdAnimal(int idAnimal) throws DaoException {
+		PreparedStatement preparedStatement = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_DELETE_USAGE_BY_ID_ANIMAL);
+			preparedStatement.setInt(1, idAnimal);
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			closePreparedStatement(preparedStatement);
+		}
 	}
 }

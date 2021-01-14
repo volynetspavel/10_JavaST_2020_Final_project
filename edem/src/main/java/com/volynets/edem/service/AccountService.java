@@ -1,5 +1,7 @@
 package com.volynets.edem.service;
 
+import java.util.List;
+
 import com.volynets.edem.entity.Account;
 import com.volynets.edem.exception.ServiceException;
 
@@ -11,6 +13,10 @@ import com.volynets.edem.exception.ServiceException;
  */
 public interface AccountService {
 	Account findById(int id) throws ServiceException;
-	
+
 	void insertAccount(Account account) throws ServiceException;
+
+	List<Account> findAll() throws ServiceException;
+
+	void delete(int id) throws ServiceException;
 }
