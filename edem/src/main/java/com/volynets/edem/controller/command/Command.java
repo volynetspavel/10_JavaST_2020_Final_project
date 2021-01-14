@@ -18,6 +18,4 @@ public interface Command {
      */
     String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException;
     
-    String executeString(String surname, String name, String avatar, String email, String password,
-			String confirmedPassword) throws ServiceException;
 }

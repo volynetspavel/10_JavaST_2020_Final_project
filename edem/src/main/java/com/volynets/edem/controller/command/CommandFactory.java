@@ -10,6 +10,16 @@ import org.apache.logging.log4j.Logger;
 import com.volynets.edem.controller.command.impl.RegistrationCommand;
 import com.volynets.edem.controller.command.impl.SignInCommand;
 import com.volynets.edem.controller.command.impl.SignOutCommand;
+import com.volynets.edem.controller.command.impl.TakeActionCommand;
+import com.volynets.edem.controller.command.impl.ViewAllActionsCommand;
+import com.volynets.edem.controller.command.impl.admin.DeleteAccountCommand;
+import com.volynets.edem.controller.command.impl.admin.DeleteActionCommand;
+import com.volynets.edem.controller.command.impl.admin.DeleteAnimalCommand;
+import com.volynets.edem.controller.command.impl.admin.UpdateActionCommand;
+import com.volynets.edem.controller.command.impl.admin.UpdateAnimalCommand;
+import com.volynets.edem.controller.command.impl.admin.ViewAllAccountsCommand;
+import com.volynets.edem.controller.command.impl.admin.ViewAllAnimalsCommand;
+import com.volynets.edem.controller.command.impl.user.CountCo2Command;
 
 /**
  * This class is used to correlate the command that came from the request with
@@ -31,7 +41,16 @@ public class CommandFactory {
 		commandMap.put(CommandType.SIGN_IN, new SignInCommand());
 		commandMap.put(CommandType.SIGN_OUT, new SignOutCommand());
 		commandMap.put(CommandType.REGISTRATION, new RegistrationCommand());
-
+		commandMap.put(CommandType.VIEW_ALL_ACTIONS, new ViewAllActionsCommand());
+		commandMap.put(CommandType.TAKE_ACTION, new TakeActionCommand());
+		commandMap.put(CommandType.COUNT_TOTAL_CO2_BY_ACCOUNT_AND_ANIMAL, new CountCo2Command());
+		commandMap.put(CommandType.VIEW_ALL_ACCOUNTS, new ViewAllAccountsCommand());
+		commandMap.put(CommandType.VIEW_ALL_ANIMALS, new ViewAllAnimalsCommand());
+		commandMap.put(CommandType.DELETE_ACCOUNT, new DeleteAccountCommand());
+		commandMap.put(CommandType.DELETE_ACTION, new DeleteActionCommand());
+		commandMap.put(CommandType.DELETE_ANIMAL, new DeleteAnimalCommand());
+		commandMap.put(CommandType.UPDQTE_ACTION, new UpdateActionCommand());
+		commandMap.put(CommandType.UPDATE_ANIMAL, new UpdateAnimalCommand());
 	}
 
 	public static CommandFactory getInstance() {
