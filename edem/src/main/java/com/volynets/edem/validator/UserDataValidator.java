@@ -15,8 +15,8 @@ public class UserDataValidator {
 	private Map<String, String> errorMessages = new HashMap<>();
 
 	private static final String STRING_REGEX_ALPHABETIC_STRING = "^(\\p{IsAlphabetic}+){1,50}$";
-	private static final String STRING_REGEX_EMAIL = "user11@gmail.com";		//"(\\w{6,})@(\\w+\\.)([a-z]{2,4})";
-	private static final String STRING_REGEX_PASSWORD = "user";		//"(?=.*[\\d])(?=.*[a-z])(?=.*[A-Z]).{7,16}";
+	private static final String STRING_REGEX_EMAIL = "(\\w{5,})@(\\w+\\.)([a-z]{2,4})";
+	private static final String STRING_REGEX_PASSWORD = "(?=.*[\\d])(?=.*[a-z])(?=.*[A-Z]).{7,16}";
 
 	public Map<String, String> validateData(String surname, String name, String avatar, String email, String password,
 			String confirmedPassword) {
