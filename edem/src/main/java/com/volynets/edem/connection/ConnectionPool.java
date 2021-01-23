@@ -27,184 +27,169 @@ import com.volynets.edem.exception.ConnectionPoolException;
  */
 public class ConnectionPool {
 	private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
-	
-    private static ConnectionPool instance;
-    private static ReentrantLock lock = new ReentrantLock();
-    private static AtomicBoolean create = new AtomicBoolean(false);
-    
-    private static final int MAX_POOL_SIZE;
-    private static final String CONNECTION_URL;
 
-    private BlockingQueue<PooledConnection> availableConnections;
-    private Set<PooledConnection> usedConnections;
+	private static ConnectionPool instance;
+	private static ReentrantLock lock = new ReentrantLock();
+	private static AtomicBoolean create = new AtomicBoolean(false);
 
-    static {
-        MAX_POOL_SIZE = ConnectorDB.obtainMaxPoolSize();
-        CONNECTION_URL = ConnectorDB.obtainConnectionURL();
-    }
+	private static final int MAX_POOL_SIZE;
+	private static final String CONNECTION_URL;
 
-    private ConnectionPool() throws ConnectionPoolException {
-        try {
-            Class.forName(ConnectorDB.obtainDriver()); //register driver
+	private BlockingQueue<PooledConnection> availableConnections;
+	private Set<PooledConnection> usedConnections;
 
-            init();
-        } catch (ClassNotFoundException e) {
-        	LOGGER.error(e);
-            throw new ConnectionPoolException(e);
-        }
-    }
-    
-    /**
-     * This method initialize parameters of connection pool.
-     * @throws ConnectionPoolException if connection pool does not have connections.
-     */
-    private void init() throws ConnectionPoolException {
-        availableConnections = new LinkedBlockingQueue<>(MAX_POOL_SIZE);
-        usedConnections = new HashSet<>(MAX_POOL_SIZE);
+	static {
+		MAX_POOL_SIZE = ConnectorDB.obtainMaxPoolSize();
+		CONNECTION_URL = ConnectorDB.obtainConnectionURL();
+	}
 
-        for (int i = 0; i < MAX_POOL_SIZE; i++) {
-            try {
-                availableConnections.put(new PooledConnection(
-                		DriverManager.getConnection(CONNECTION_URL, ConnectorDB.obtainProperties())));
-            } catch (InterruptedException | SQLException e) {
-                LOGGER.error(e.getMessage(), e);
-            }
-        }
-        if (availableConnections.isEmpty()) {
-            LOGGER.fatal("There is no connection in the pool.");
-            throw new ConnectionPoolException("There is no connection in the pool.");
-        }
+	private ConnectionPool() throws ConnectionPoolException {
+		try {
+			Class.forName(ConnectorDB.obtainDriver()); // register driver
 
-        startCheckingTimer();
-    }
-    
-    /**
-     * This method checks every period if connections are lost.
-     */
-    private void startCheckingTimer() {
+			init();
+		} catch (ClassNotFoundException e) {
+			LOGGER.error(e);
+			throw new ConnectionPoolException(e);
+		}
+	}
 
-        TimerTask check = new TimerTask() {
-            public void run() {
-                if (availableConnections.size() + usedConnections.size() != MAX_POOL_SIZE) {
-                    LOGGER.error("Lost " + (MAX_POOL_SIZE - availableConnections.size() - usedConnections.size()) + " connections in total.");
-                }
-            }
-        };
+	/**
+	 * This method initialize parameters of connection pool.
+	 * 
+	 * @throws ConnectionPoolException if connection pool does not have connections.
+	 */
+	private void init() throws ConnectionPoolException {
+		availableConnections = new LinkedBlockingQueue<>(MAX_POOL_SIZE);
+		usedConnections = new HashSet<>(MAX_POOL_SIZE);
 
-        Timer timer = new Timer("Timer");
+		for (int i = 0; i < MAX_POOL_SIZE; i++) {
+			try {
+				availableConnections.put(new PooledConnection(
+						DriverManager.getConnection(CONNECTION_URL, ConnectorDB.obtainProperties())));
+			} catch (InterruptedException | SQLException e) {
+				LOGGER.error(e.getMessage(), e);
+			}
+		}
+		if (availableConnections.isEmpty()) {
+			LOGGER.fatal("There is no connection in the pool.");
+			throw new ConnectionPoolException("There is no connection in the pool.");
+		}
+	}
 
-        final long delay = 0L;
-        final long period = 60000L;
-        timer.scheduleAtFixedRate(check, delay, period);
-    }
-    
-    public static ConnectionPool getInstance() {
-        if (!create.get()) {
-            try {
-                lock.lock();
-                if (instance == null) {
-                    instance = new ConnectionPool();
-                    create.set(true);
-                }
-            } catch (ConnectionPoolException e) {
-                LOGGER.fatal(e.getMessage(), e);
-                throw new RuntimeException(e);
-            } finally {
-                lock.unlock();
-            }
-        }
-        return instance;
-    }
+	public static ConnectionPool getInstance() {
+		if (!create.get()) {
+			try {
+				lock.lock();
+				if (instance == null) {
+					instance = new ConnectionPool();
+					create.set(true);
+				}
+			} catch (ConnectionPoolException e) {
+				LOGGER.fatal(e.getMessage(), e);
+				throw new RuntimeException(e);
+			} finally {
+				lock.unlock();
+			}
+		}
+		return instance;
+	}
 
-    /**
-     * This method extract connection from availableConnections and put it into usedConnections.
-     * @return extracted connection.
-     */
-    public Connection takeConnection() {
+	/**
+	 * This method extract connection from availableConnections and put it into
+	 * usedConnections.
+	 * 
+	 * @return extracted connection.
+	 */
+	public Connection takeConnection() {
 
-        PooledConnection connection = null;
+		PooledConnection connection = null;
 
-        lock.lock();
-        try {
-            connection = availableConnections.take();
-            usedConnections.add(connection);
+		lock.lock();
+		try {
+			connection = availableConnections.take();
+			usedConnections.add(connection);
 
-            LOGGER.debug("================= Take =================");
-            LOGGER.debug("Available connections = " + availableConnections.size());
-            LOGGER.debug("Used connections = " + usedConnections.size());
-            LOGGER.debug("MAX_POOL_SIZE = " + MAX_POOL_SIZE);
+			LOGGER.debug("================= Take =================");
+			LOGGER.debug("Available connections = " + availableConnections.size());
+			LOGGER.debug("Used connections = " + usedConnections.size());
+			LOGGER.debug("MAX_POOL_SIZE = " + MAX_POOL_SIZE);
 
-        } catch (InterruptedException e) {
-            LOGGER.error(e.getMessage(), e);
-            Thread.currentThread().interrupt();
-        }
-        lock.unlock();
+		} catch (InterruptedException e) {
+			LOGGER.error(e.getMessage(), e);
+			Thread.currentThread().interrupt();
+		}
+		lock.unlock();
 
-        return connection;
-    }
+		return connection;
+	}
 
-    /**
-     * This method removes connection from usedConnections and put it into availableConnections.
-     * @param connection that should be returned to availableConnections.
-     */
-    public void returnConnection(Connection connection) {
-        try {
-            if (connection instanceof PooledConnection) {
-                PooledConnection proxyConnection = (PooledConnection) connection;
-                proxyConnection.setAutoCommit(true);
+	/**
+	 * This method removes connection from usedConnections and put it into
+	 * availableConnections.
+	 * 
+	 * @param connection that should be returned to availableConnections.
+	 */
+	public void returnConnection(Connection connection) {
+		try {
+			if (connection instanceof PooledConnection) {
+				PooledConnection proxyConnection = (PooledConnection) connection;
+				proxyConnection.setAutoCommit(true);
 
-                usedConnections.remove(proxyConnection);
-                availableConnections.offer(proxyConnection);
+				usedConnections.remove(proxyConnection);
+				availableConnections.offer(proxyConnection);
 
-                LOGGER.debug("================= Return =================");
-                LOGGER.debug("Available connections = " + availableConnections.size());
-                LOGGER.debug("Used connections = " + usedConnections.size());
-                LOGGER.debug("MAX_POOL_SIZE = " + MAX_POOL_SIZE);
-            } else {
-                LOGGER.error("Connection does not belong to this pool");
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
+				LOGGER.debug("================= Return =================");
+				LOGGER.debug("Available connections = " + availableConnections.size());
+				LOGGER.debug("Used connections = " + usedConnections.size());
+				LOGGER.debug("MAX_POOL_SIZE = " + MAX_POOL_SIZE);
+			} else {
+				LOGGER.error("Connection does not belong to this pool");
+			}
+		} catch (SQLException e) {
+			LOGGER.error(e.getMessage(), e);
 
-            try {
-                connection.close();
-            } catch (SQLException e1) {
-                LOGGER.error(e1.getMessage(), e1);
-            }
-        }
-    }
+			try {
+				connection.close();
+			} catch (SQLException e1) {
+				LOGGER.error(e1.getMessage(), e1);
+			}
+		}
+	}
 
-    /**
-     * This method close all connection from pool and deregister driver.
-     * @throws ConnectionPoolException if problem with in correct connection closing happens.
-     */
-    public void closePool() throws ConnectionPoolException {
-        try {
-            lock.lock();
-            for (int i = 0; i < MAX_POOL_SIZE; i++) {
+	/**
+	 * This method close all connection from pool and deregister driver.
+	 * 
+	 * @throws ConnectionPoolException if problem with in correct connection closing
+	 *                                 happens.
+	 */
+	public void closePool() throws ConnectionPoolException {
+		try {
+			lock.lock();
+			for (int i = 0; i < MAX_POOL_SIZE; i++) {
 
-                try {
-                    PooledConnection connection = availableConnections.take();
-                    connection.realClose();
+				try {
+					PooledConnection connection = availableConnections.take();
+					connection.realClose();
 
-                    Enumeration<Driver> drivers = DriverManager.getDrivers();
-                    while (drivers.hasMoreElements()) {
-                        try {
-                            Driver driver = drivers.nextElement();
-                            DriverManager.deregisterDriver(driver);
-                        } catch (Exception e) {
-                            LOGGER.error(e.toString(), e);
-                        }
-                    }
-                } catch (InterruptedException e) {
-                    LOGGER.error(e.getMessage(), e);
-                    Thread.currentThread().interrupt();
-                } catch (SQLException e) {
-                    throw new ConnectionPoolException("There's a problem with connection closing.", e);
-                }
-            }
-        } finally {
-            lock.unlock();
-        }
-    }
+					Enumeration<Driver> drivers = DriverManager.getDrivers();
+					while (drivers.hasMoreElements()) {
+						try {
+							Driver driver = drivers.nextElement();
+							DriverManager.deregisterDriver(driver);
+						} catch (Exception e) {
+							LOGGER.error(e.toString(), e);
+						}
+					}
+				} catch (InterruptedException e) {
+					LOGGER.error(e.getMessage(), e);
+					Thread.currentThread().interrupt();
+				} catch (SQLException e) {
+					throw new ConnectionPoolException("There's a problem with connection closing.", e);
+				}
+			}
+		} finally {
+			lock.unlock();
+		}
+	}
 }
