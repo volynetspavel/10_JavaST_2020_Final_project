@@ -17,4 +17,6 @@ public abstract class UsageDao extends AbstractDao<Usage> {
 	public abstract void deleteByIdAction(int idAction) throws DaoException;
 	
 	public abstract void deleteByIdAnimal(int idAnimal) throws DaoException;
+	
+	public abstract int findIdAnimalByIdUser(int idUser) throws DaoException;
 }

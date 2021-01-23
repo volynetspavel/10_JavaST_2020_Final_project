@@ -13,9 +13,9 @@ import com.volynets.edem.exception.DaoException;
  */
 public abstract class UserDao extends AbstractDao<User> {
 
-    public abstract List<User> findByEmailAndPass(String email, String password) throws DaoException;
-    
-    public abstract boolean containsEmail(String email) throws DaoException;
-    
-    public abstract User findByEmail(String email) throws DaoException;
+	public abstract List<User> findByEmailAndPass(String email, String password) throws DaoException;
+
+	public abstract boolean containsEmail(String email) throws DaoException;
+
+	public abstract User findByEmail(String email) throws DaoException;
 }

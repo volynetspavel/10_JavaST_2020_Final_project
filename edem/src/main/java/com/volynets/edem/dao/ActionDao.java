@@ -10,5 +10,5 @@ import com.volynets.edem.exception.DaoException;
  * @version 1.0
  */
 public abstract class ActionDao extends AbstractDao<Action> {
-	public abstract Action findByTitle(String name) throws DaoException;
+	public abstract Action findByTitle(String title) throws DaoException;
 }

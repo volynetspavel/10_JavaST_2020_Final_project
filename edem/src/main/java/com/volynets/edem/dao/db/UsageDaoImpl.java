@@ -14,7 +14,6 @@ import com.volynets.edem.dao.UsageDao;
 import com.volynets.edem.entity.Account;
 import com.volynets.edem.entity.Action;
 import com.volynets.edem.entity.Animal;
-import com.volynets.edem.entity.Role;
 import com.volynets.edem.entity.Usage;
 import com.volynets.edem.exception.DaoException;
 
@@ -43,6 +42,8 @@ public class UsageDaoImpl extends UsageDao {
     		+ "WHERE id_action=?";
     private static final String SQL_DELETE_USAGE_BY_ID_ANIMAL = "DELETE FROM edem_db.usage "
     		+ "WHERE id_animal=?";
+    private static final String SQL_FIND_ID_ANIMAL_BY_ID_USER = "SELECT id_animal FROM edem_db.usage "
+    		+ "WHERE id_account=?";
 
 	@Override
 	public void insert(Usage entity) throws DaoException {
@@ -265,5 +266,30 @@ public class UsageDaoImpl extends UsageDao {
 		} finally {
 			closePreparedStatement(preparedStatement);
 		}
+	}
+
+	@Override
+	public int findIdAnimalByIdUser(int idUser) throws DaoException {
+		int idAnimal = 0;
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_FIND_ID_ANIMAL_BY_ID_USER);
+			preparedStatement.setInt(1, idUser);
+
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				idAnimal = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}
+		closeResultSet(resultSet);
+		closePreparedStatement(preparedStatement);
+		
+		return idAnimal;
 	}
 }

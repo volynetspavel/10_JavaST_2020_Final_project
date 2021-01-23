@@ -36,6 +36,8 @@ public class CommentDaoImpl extends CommentDao {
     		+ "WHERE id_account=?";
     private static final String SQL_DELETE_COMMENT_BY_ID_ACTION = "DELETE FROM edem_db.comment "
     		+ "WHERE id_action=?";
+	private static final String SQL_FIND_COMMENTS_BY_ID_ACTION = "SELECT * FROM edem_db.comment "
+			+ "WHERE id_action=?";
     
 
 	@Override
@@ -205,5 +207,45 @@ public class CommentDaoImpl extends CommentDao {
 			closePreparedStatement(preparedStatement);
 		}
 		
+	}
+
+	@Override
+	public List<Comment> findByActionId(int idAction) throws DaoException {
+		AbstractDao<Account> accountDao = new AccountDaoImpl();
+		accountDao.setConnection(connection);
+		AbstractDao<Action> actionDao = new ActionDaoImpl();
+		actionDao.setConnection(connection);;
+		
+		List<Comment> comments = new ArrayList<Comment>();
+		Comment comment = new Comment();
+
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			preparedStatement = connection.prepareStatement(SQL_FIND_COMMENTS_BY_ID_ACTION);
+			preparedStatement.setInt(1, idAction);
+			
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				comment.setId(resultSet.getInt(1));
+				comment.setContent(resultSet.getString(2));
+				comment.setCreated(resultSet.getTimestamp(3));
+				
+				int idAccount = resultSet.getInt(4);
+				Account account = accountDao.findById(idAccount);
+				comment.setAccount(account);
+				
+				Action action = actionDao.findById(idAction);
+				comment.setAction(action);
+				
+				comments.add(comment);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}
+		closeResultSet(resultSet);
+		closePreparedStatement(preparedStatement);
+		return comments;
 	}
 }

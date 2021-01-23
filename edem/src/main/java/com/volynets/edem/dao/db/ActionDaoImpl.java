@@ -29,7 +29,7 @@ public class ActionDaoImpl extends ActionDao {
 			+ "SET `title`=?, `desc`=?, `content`=?, `logo`=?, `comment`=?, co2=? WHERE id=?";
 	private static final String SQL_INSERT_ACTION = "INSERT into edem_db.action "
 			+ "(`title`,`desc`,`content`,`logo`,`comment`,`co2`) VALUES (?, ?, ?, ?, ?, ?)";
-	private static final String SQL_FIND_ACTION_BY_NAME = "SELECT * FROM edem_db.action WHERE title=?";
+	private static final String SQL_FIND_ACTION_BY_TITLE = "SELECT * FROM edem_db.action WHERE title=?";
 
 	@Override
 	public void insert(Action entity) throws DaoException {
@@ -154,15 +154,15 @@ public class ActionDaoImpl extends ActionDao {
 	}
 
 	@Override
-	public Action findByTitle(String name) throws DaoException {
+	public Action findByTitle(String title) throws DaoException {
 		Action action = new Action();
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
 		try {
-			preparedStatement = connection.prepareStatement(SQL_FIND_ACTION_BY_NAME);
-			preparedStatement.setString(1, name);
+			preparedStatement = connection.prepareStatement(SQL_FIND_ACTION_BY_TITLE);
+			preparedStatement.setString(1, title);
 
 			resultSet = preparedStatement.executeQuery();
 
