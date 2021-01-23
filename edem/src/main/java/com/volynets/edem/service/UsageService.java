@@ -9,8 +9,10 @@ import com.volynets.edem.exception.ServiceException;
  * @version 1.0
  */
 public interface UsageService {
-	void takeAction(String animalName, String actionName, String email) throws ServiceException;
+	void takeAction(int idAnimal, String actionName, String email) throws ServiceException;
 
 	int sumCo2ForUser(int idUser, int idAnimal) throws ServiceException;
-	
+
+	int findIdAnimalByIdUser(int idUser) throws ServiceException;
+
 }

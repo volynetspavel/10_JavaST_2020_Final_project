@@ -13,10 +13,12 @@ import com.volynets.edem.exception.ServiceException;
  */
 public interface ActionService {
 	Action findById(int id) throws ServiceException;
-	
+
 	List<Action> findAll() throws ServiceException;
-	
+
 	void delete(int id) throws ServiceException;
-	
+
 	void update(Action action) throws ServiceException;
+
+	Action findByTitle(String title) throws ServiceException;
 }

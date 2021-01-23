@@ -103,4 +103,17 @@ public class ActionServiceImpl extends AbstractService implements ActionService 
 		}
 	}
 
+	@Override
+	public Action findByTitle(String title) throws ServiceException {
+		Connection connection = ConnectionPool.getInstance().takeConnection();
+		actionDao.setConnection(connection);
+		try {
+			return actionDao.findByTitle(title);
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+	}
+
 }

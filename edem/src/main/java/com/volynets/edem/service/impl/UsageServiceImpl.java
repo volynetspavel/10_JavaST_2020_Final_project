@@ -38,7 +38,7 @@ public class UsageServiceImpl extends AbstractService implements UsageService {
 	}
 
 	@Override
-	public void takeAction(String animalName, String actionName, String email) throws ServiceException {
+	public void takeAction(int idAnimal, String actionTitle, String email) throws ServiceException {
 		EntityTransaction transaction = new EntityTransaction();
 
 		AnimalDao animalDao = daoFactory.getAnimalDao();
@@ -54,8 +54,8 @@ public class UsageServiceImpl extends AbstractService implements UsageService {
 
 		try {
 			transaction.initTransaction(usageDao, animalDao, actionDao, userDao, accountDao);
-			animal = animalDao.findByName(animalName);
-			action = actionDao.findByTitle(actionName);
+			animal = animalDao.findById(idAnimal);
+			action = actionDao.findByTitle(actionTitle);
 			user = userDao.findByEmail(email);
 			account = accountDao.findById(user.getId());
 
@@ -97,5 +97,21 @@ public class UsageServiceImpl extends AbstractService implements UsageService {
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
 		return sumCo2;
+	}
+
+	@Override
+	public int findIdAnimalByIdUser(int idUser) throws ServiceException {
+		Connection connection = ConnectionPool.getInstance().takeConnection();
+		usageDao.setConnection(connection);
+		int idAnimal;
+
+		try {
+			idAnimal = usageDao.findIdAnimalByIdUser(idUser);
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+		return idAnimal;
 	}
 }
