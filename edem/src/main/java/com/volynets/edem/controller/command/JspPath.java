@@ -8,12 +8,21 @@ package com.volynets.edem.controller.command;
  */
 public enum JspPath {
     INDEX("/index.jsp"),
- //   REGISTRATION("/jsp/registration.jsp"),
- //   HOME("/jsp/common/home.jsp"),
+
     ERROR("/jsp/error.jsp"),
     SIGN_IN("/jsp/sign_in.jsp"),
-	WELCOME("/jsp/welcome.jsp");
     
+    HOME_USER("/jsp/user/home_user.jsp"),
+    HOME_ADMIN("/jsp/admin/home_admin.jsp"),
+	VIEW_ACTIONS("/jsp/view_actions.jsp"),
+	VIEW_ANIMALS("/jsp/view_animals.jsp"),
+	ACTION("/jsp/user/action.jsp"),
+		
+	VIEW_ACTIONS_ADMIN("/jsp/admin/view_actions.jsp"),
+	VIEW_ACCOUNTS("/jsp/admin/view_accounts.jsp"),
+		
+    REGISTRATION("/jsp/registration.jsp");
+
     private String url;
 
     JspPath(String url) {
