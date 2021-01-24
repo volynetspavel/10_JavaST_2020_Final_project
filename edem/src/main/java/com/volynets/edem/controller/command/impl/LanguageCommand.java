@@ -24,9 +24,11 @@ public class LanguageCommand implements Command {
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-		request.getSession().setAttribute(LOCAL, request.getParameter(LOCAL));
+		String language = request.getParameter(LOCAL);
+		request.getSession().setAttribute(LOCAL, language);
 		String page = request.getParameter(CURRENT_PATH).replace("http://localhost:8080/edem", "");
-
+		
+		LOGGER.info("Language changed into " + language);
 		return page;
 	}
 

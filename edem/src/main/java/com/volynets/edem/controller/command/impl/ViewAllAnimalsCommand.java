@@ -10,12 +10,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.volynets.edem.controller.command.Command;
 import com.volynets.edem.controller.command.JspPath;
-import com.volynets.edem.entity.Action;
 import com.volynets.edem.entity.Animal;
-import com.volynets.edem.entity.Role;
-import com.volynets.edem.entity.User;
 import com.volynets.edem.exception.ServiceException;
-import com.volynets.edem.service.ActionService;
 import com.volynets.edem.service.AnimalService;
 import com.volynets.edem.service.factory.ServiceFactory;
 
@@ -32,15 +28,13 @@ public class ViewAllAnimalsCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-		String page;
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
 		AnimalService animalService = serviceFactory.getAnimalService();
 
 		List<Animal> animals = animalService.findAll();
 		request.setAttribute(ANIMALS, animals);
-
-		page = JspPath.VIEW_ANIMALS.getUrl();
-
-		return page;
+		LOGGER.info("User was viewing all animals.");
+		
+		return JspPath.VIEW_ANIMALS.getUrl();
 	}
 }

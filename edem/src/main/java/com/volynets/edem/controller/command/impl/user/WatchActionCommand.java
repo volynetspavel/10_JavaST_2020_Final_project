@@ -12,6 +12,7 @@ import com.volynets.edem.controller.command.Command;
 import com.volynets.edem.controller.command.JspPath;
 import com.volynets.edem.entity.Action;
 import com.volynets.edem.entity.Comment;
+import com.volynets.edem.entity.User;
 import com.volynets.edem.exception.ServiceException;
 import com.volynets.edem.service.ActionService;
 import com.volynets.edem.service.CommentService;
@@ -26,9 +27,8 @@ import com.volynets.edem.service.factory.ServiceFactory;
 public class WatchActionCommand implements Command {
 	private static final Logger LOGGER = LogManager.getLogger(WatchActionCommand.class);
 
-	private static final String ACTION = "action";
 	private static final String ID_ACTION = "id_action";
-	
+	private static final String USER = "user";
 	private static final String LOGO = "logo";
 	private static final String TITLE = "title";
 	private static final String CO2 = "co2";
@@ -55,7 +55,9 @@ public class WatchActionCommand implements Command {
 		
 		List<Comment> listComments = commentService.findByActionId(idAction);
 		request.setAttribute(LIST_COMMENTS, listComments);
-
+		
+		User user = ((User) request.getSession().getAttribute(USER));
+		LOGGER.info("User " + user.getEmail() + " was watching action " + action.getTitle());
 		return JspPath.ACTION.getUrl();
 	}
 

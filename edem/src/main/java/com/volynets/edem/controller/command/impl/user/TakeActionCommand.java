@@ -24,7 +24,7 @@ import com.volynets.edem.service.UsageService;
 import com.volynets.edem.service.factory.ServiceFactory;
 
 /**
- * This class is used to add action and animal into user account.
+ * This class is used for taking action into user account by user choice.
  * 
  * @author Pavel Volynets
  * @version 1.0
@@ -34,6 +34,7 @@ public class TakeActionCommand implements Command {
 
 	private static final String USER = "user";
 	private static final String ACTION_COMPLETE = "actionComplete";
+	private static final String ERROR_ACTION = "errorAction";
 	private static final String TITLE_ACTION = "title_action";
 	
 	private static final String LOGO = "logo";
@@ -47,18 +48,23 @@ public class TakeActionCommand implements Command {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
 		UsageService usageService = serviceFactory.getUsageService();
-		AnimalService animalService = serviceFactory.getAnimalService();
-		
+			
 		int idUser = ((User) request.getSession().getAttribute(USER)).getId();
 		
-		int idAnimal = usageService.findIdAnimalByIdUser(idUser);		
+		Animal animal = usageService.findAnimalByIdUser(idUser);
 		String actionTitle = request.getParameter(TITLE_ACTION);
 		String email = ((User) request.getSession().getAttribute(USER)).getEmail();
-		Animal animal = animalService.findById(idAnimal);
+		int idAnimal;
 		
-		usageService.takeAction(idAnimal, actionTitle, email);
-		
-		request.setAttribute(ACTION_COMPLETE, "Action completed successfully");
+		if (animal != null) {
+			idAnimal = animal.getId();
+			usageService.takeAction(idAnimal, actionTitle, email);
+			request.setAttribute(ACTION_COMPLETE, "Action completed successfully");
+			LOGGER.debug("Action -" + actionTitle + " for animal -  " + animal.getName() + "successfully added.");
+		} else {
+			request.setAttribute(ERROR_ACTION, "You didn't choose animal for saving.");
+			LOGGER.debug("User " + email + " tried to take action '" + actionTitle + "', but didnit choose animal. ");
+		}
 		
 		ActionService actionService = serviceFactory.getActionService();
 		CommentService commentService = serviceFactory.getCommentService();
@@ -73,8 +79,7 @@ public class TakeActionCommand implements Command {
 		
 		List<Comment> listComments = commentService.findByActionId(action.getId());
 		request.setAttribute(LIST_COMMENTS, listComments);
-		
-		LOGGER.debug("Action -" + actionTitle + " for animal -  " + animal.getName() + "successfully added.");
+
 		return JspPath.ACTION.getUrl();
 	}
 }

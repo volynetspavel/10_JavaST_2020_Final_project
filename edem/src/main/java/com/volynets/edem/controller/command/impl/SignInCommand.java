@@ -1,5 +1,7 @@
 package com.volynets.edem.controller.command.impl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,6 +34,7 @@ public class SignInCommand implements Command {
 	private static final String ERROR_INPUT_DATA = "errorInputData";
 	private static final String ERROR = "error";
 	private static final String STATUS_CODE = "statusCode";
+	private static final String ACCOUNTS = "accounts";
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
@@ -66,7 +69,11 @@ public class SignInCommand implements Command {
 
 					request.getSession().setAttribute(USER, user);
 					request.setAttribute(USER, account.getName());
-					page = JspPath.HOME_ADMIN.getUrl();
+					
+					List<Account> accounts = accountService.findAll();
+					request.setAttribute(ACCOUNTS, accounts);
+					
+					page = JspPath.VIEW_ACCOUNTS.getUrl();
 				}
 			} else {
 				LOGGER.error("SignInCommand. Incorrect username or email or password");

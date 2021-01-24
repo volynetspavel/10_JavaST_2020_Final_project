@@ -34,6 +34,7 @@ public class ViewAllAccountsCommand implements Command {
 
 		List<Account> accounts = accountService.findAll();
 		request.setAttribute(ACCOUNTS, accounts);
+		LOGGER.info("Admin was viewing all accounts.");
 
 		return JspPath.VIEW_ACCOUNTS.getUrl();
 	}
