@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+	<Properties>
+		<Property name="patternfull">
+			%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+		</Property>
+	</Properties>
+	
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<RollingFile name="TxtFile" fileName="logs/logs.log"
+			filePattern="logs/logs-%d{yyyy-MM-dd}.log"
+			ignoreExceptions="false">
+			<PatternLayout pattern="${patternfull}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="2MB" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<Root level="debug">
+			<AppenderRef ref="Console"/>
+			<AppenderRef ref="TxtFile" level="info"/>
+		</Root>
+	</Loggers>
+</configuration>
