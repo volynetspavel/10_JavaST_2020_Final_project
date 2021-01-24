@@ -44,6 +44,8 @@ public class UsageDaoImpl extends UsageDao {
     		+ "WHERE id_animal=?";
     private static final String SQL_FIND_ID_ANIMAL_BY_ID_USER = "SELECT id_animal FROM edem_db.usage "
     		+ "WHERE id_account=?";
+    private static final String SQL_INSERT_ANIMAL_WITHOUT_ACTION_AND_CO2 = "INSERT into edem_db.usage "
+			+ "(id_account, id_action, reducedCO2, id_animal) VALUES (?, ?, ?, ?)";
 
 	@Override
 	public void insert(Usage entity) throws DaoException {
@@ -56,9 +58,7 @@ public class UsageDaoImpl extends UsageDao {
 			preparedStatement.setInt(3, entity.getReducedCO2());
 			preparedStatement.setInt(4, entity.getAnimal().getId());
 
-			System.out.println("UsageDaoImpl before execute - " + connection.getAutoCommit());
 			preparedStatement.executeUpdate();
-			System.out.println("UsageDaoImpl - " + connection.getAutoCommit());
 		} catch (SQLException e) {
 			throw new DaoException(e);
 		} finally {
@@ -291,5 +291,27 @@ public class UsageDaoImpl extends UsageDao {
 		closePreparedStatement(preparedStatement);
 		
 		return idAnimal;
+	}
+
+	@Override
+	public void takeAnimal(int idAnimal, int idUser) throws DaoException {
+		int idAction = 1;
+		int reducedCO2 = 0;
+		
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			preparedStatement = connection.prepareStatement(SQL_INSERT_ANIMAL_WITHOUT_ACTION_AND_CO2);
+			preparedStatement.setInt(1, idUser);
+			preparedStatement.setInt(2, idAction);
+			preparedStatement.setInt(3, reducedCO2);
+			preparedStatement.setInt(4, idAnimal);
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			closePreparedStatement(preparedStatement);
+		}
 	}
 }

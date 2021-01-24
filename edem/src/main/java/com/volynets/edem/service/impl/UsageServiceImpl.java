@@ -114,4 +114,51 @@ public class UsageServiceImpl extends AbstractService implements UsageService {
 		}
 		return idAnimal;
 	}
+
+	@Override
+	public Animal findAnimalByIdUser(int idUser) throws ServiceException {
+		EntityTransaction transaction = new EntityTransaction();
+		
+		AnimalDao animalDao = daoFactory.getAnimalDao();
+
+		int idAnimal;
+		Animal animal = null;
+
+		try {
+			transaction.initTransaction(usageDao, animalDao);
+			
+			idAnimal = usageDao.findIdAnimalByIdUser(idUser);
+			animal = animalDao.findById(idAnimal);
+			
+			transaction.commit();
+		} catch (DaoException e) {
+			try {
+				transaction.rollback();
+			} catch (DaoException e1) {
+				throw new ServiceException(e);
+			}
+			throw new ServiceException(e);
+		} finally {
+			try {
+				transaction.endTransaction();
+			} catch (DaoException e) {
+				throw new ServiceException(e);
+			}
+		}
+		return animal;
+	}
+
+	@Override
+	public void takeAnimal(int idAnimal, int idUser) throws ServiceException {
+		Connection connection = ConnectionPool.getInstance().takeConnection();
+		usageDao.setConnection(connection);
+		
+		try {
+			usageDao.takeAnimal(idAnimal, idUser);
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+	}
 }

@@ -21,4 +21,6 @@ public interface ActionService {
 	void update(Action action) throws ServiceException;
 
 	Action findByTitle(String title) throws ServiceException;
+	
+	void addAction(String title, String desc, String content, String logo, int countCO2) throws ServiceException;
 }

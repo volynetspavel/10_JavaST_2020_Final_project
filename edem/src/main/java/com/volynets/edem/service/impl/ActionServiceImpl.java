@@ -38,8 +38,14 @@ public class ActionServiceImpl extends AbstractService implements ActionService 
 	public List<Action> findAll() throws ServiceException {
 		Connection connection = ConnectionPool.getInstance().takeConnection();
 		actionDao.setConnection(connection);
+		
+		List<Action> actions = null;
 		try {
-			return actionDao.findAll();
+			actions =  actionDao.findAll();
+			
+			//first action is default without parameters
+			actions.remove(0);
+			return actions;
 		} catch (DaoException e) {
 			throw new ServiceException(e);
 		} finally {
@@ -109,6 +115,29 @@ public class ActionServiceImpl extends AbstractService implements ActionService 
 		actionDao.setConnection(connection);
 		try {
 			return actionDao.findByTitle(title);
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+	}
+
+	@Override
+	public void addAction(String title, String desc, String content, String logo, int countCO2)
+			throws ServiceException {
+		Connection connection = ConnectionPool.getInstance().takeConnection();
+		actionDao.setConnection(connection);
+		
+		Action action = new Action();
+		action.setTitle(title);
+		action.setDesc(desc);
+		action.setContent(content);
+		action.setLogo(logo);
+		action.setComments(0);
+		action.setCo2(countCO2);
+		
+		try {
+			actionDao.insert(action);
 		} catch (DaoException e) {
 			throw new ServiceException(e);
 		} finally {
