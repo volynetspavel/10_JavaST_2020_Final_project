@@ -14,14 +14,17 @@ import com.volynets.edem.controller.command.impl.SignOutCommand;
 import com.volynets.edem.controller.command.impl.ViewAllActionsCommand;
 import com.volynets.edem.controller.command.impl.ViewAllAnimalsCommand;
 import com.volynets.edem.controller.command.impl.VisitRegistrationCommand;
+import com.volynets.edem.controller.command.impl.admin.AddActionCommand;
 import com.volynets.edem.controller.command.impl.admin.DeleteAccountCommand;
 import com.volynets.edem.controller.command.impl.admin.DeleteActionCommand;
 import com.volynets.edem.controller.command.impl.admin.DeleteAnimalCommand;
 import com.volynets.edem.controller.command.impl.admin.UpdateActionCommand;
 import com.volynets.edem.controller.command.impl.admin.UpdateAnimalCommand;
 import com.volynets.edem.controller.command.impl.admin.ViewAllAccountsCommand;
+import com.volynets.edem.controller.command.impl.admin.VisitAddActionCommand;
 import com.volynets.edem.controller.command.impl.user.CountCo2Command;
 import com.volynets.edem.controller.command.impl.user.TakeActionCommand;
+import com.volynets.edem.controller.command.impl.user.TakeAnimalCommand;
 import com.volynets.edem.controller.command.impl.user.WatchActionCommand;
 
 /**
@@ -47,6 +50,7 @@ public class CommandFactory {
 		commandMap.put(CommandType.REGISTRATION, new RegistrationCommand());
 		commandMap.put(CommandType.VIEW_ACTIONS, new ViewAllActionsCommand());
 		commandMap.put(CommandType.TAKE_ACTION, new TakeActionCommand());
+		commandMap.put(CommandType.TAKE_ANIMAL, new TakeAnimalCommand());
 		commandMap.put(CommandType.COUNT_TOTAL_CO2_BY_ACCOUNT_AND_ANIMAL, new CountCo2Command());
 		commandMap.put(CommandType.VIEW_ACCOUNTS, new ViewAllAccountsCommand());
 		commandMap.put(CommandType.VIEW_ANIMALS, new ViewAllAnimalsCommand());
@@ -57,6 +61,8 @@ public class CommandFactory {
 		commandMap.put(CommandType.UPDATE_ANIMAL, new UpdateAnimalCommand());
 		commandMap.put(CommandType.WATCH_ACTION, new WatchActionCommand());
 		commandMap.put(CommandType.LANGUAGE, new LanguageCommand());
+		commandMap.put(CommandType.VISIT_ADD_ACTION, new VisitAddActionCommand());
+		commandMap.put(CommandType.ADD_ACTION, new AddActionCommand());
 	}
 
 	public static CommandFactory getInstance() {
