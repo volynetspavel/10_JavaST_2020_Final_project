@@ -21,7 +21,7 @@ public class UserDataValidator {
 	public Map<String, String> validateData(String surname, String name, String avatar, String email, String password,
 			String confirmedPassword) {
 
-		errorMessages = validateData(surname, name, avatar, email);
+		errorMessages = validateData(surname, name, email);
 
 		Pattern regexPassword = Pattern.compile(STRING_REGEX_PASSWORD);
 
@@ -35,7 +35,7 @@ public class UserDataValidator {
 		return errorMessages;
 	}
 
-	private Map<String, String> validateData(String surname, String name, String avatar, String email) {
+	private Map<String, String> validateData(String surname, String name, String email) {
 
 		Pattern regexAlphabeticString = Pattern.compile(STRING_REGEX_ALPHABETIC_STRING);
 		Pattern regexEmail = Pattern.compile(STRING_REGEX_EMAIL);
