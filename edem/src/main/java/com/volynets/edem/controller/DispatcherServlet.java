@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +28,10 @@ import com.volynets.edem.exception.ServiceException;
  * @version 1.0
  */
 @WebServlet(urlPatterns = { "/sign_in", "/sign_out", "/view_actions", "/view_accounts", "/watch_action",
-		"/view_animals", "/take_action", "/registration", "/language", "/delete_account", "/delete_action",
-		"/delete_animal"})
-
+		"/view_animals", "/take_action", "/visit_registration", "/registration", "/language",
+		"/delete_account", "/delete_action", "/delete_animal", "/take_animal", "/visit_add_action",
+		"/add_action"})
+@MultipartConfig
 public class DispatcherServlet extends HttpServlet {
 	private static final Logger LOGGER = LogManager.getLogger(DispatcherServlet.class);
 
@@ -86,5 +88,9 @@ public class DispatcherServlet extends HttpServlet {
 		} catch (ConnectionPoolException e) {
 			LOGGER.error(e.getMessage(), e);
 		}
+	}
+	
+	public String getCurrentJspPath() {
+		return getServletContext().getRealPath("");
 	}
 }
