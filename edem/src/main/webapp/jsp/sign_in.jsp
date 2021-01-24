@@ -44,7 +44,7 @@
 		<div class="login-form">
 			<div class="footer">
 				<form action="registration" method="post">
-					<input type="hidden" name="command" value="registration" />
+					<input type="hidden" name="command" value="visit_registration" />
 					<input type="submit" name="submit" value="${registration}" class="register" />
 				</form>
 			</div>
