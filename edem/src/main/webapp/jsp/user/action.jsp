@@ -49,6 +49,7 @@
 						<input type="submit" name="submit" value="${take}" class="button" />
 					</form>		
 					<span class="header" style="color:green;">${actionComplete}</span>
+					<span class="header" style="color:blue;">${errorAction}</span>
 					<%-- ----------------------------------------- Comments section ----------------------------------------- --%>
 					
 					<div class="comments">

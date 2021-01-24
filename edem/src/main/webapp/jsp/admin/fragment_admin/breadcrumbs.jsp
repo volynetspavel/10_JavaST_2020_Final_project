@@ -30,8 +30,8 @@
 		</form>
 	</li>
 	<li>
-		<form action="add_action" method="post">
-			<input type="hidden" name="command" value="add_action" /> 
+		<form action="visit_add_action" method="post">
+			<input type="hidden" name="command" value="visit_add_action" /> 
 			<input type="submit" name="submit" value="${add_action }" class="button" />
 		</form>
 	</li>

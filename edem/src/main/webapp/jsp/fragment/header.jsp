@@ -18,7 +18,7 @@
 				<input type="hidden" name="command" value="sign_out" />
 				<div class="input-group" style="margin-top: 1em;">
 					<div class="input-group-button">
-						<input class="button" value="Log out" type="submit">
+						<input class="button" value="${log_out}" type="submit">
 					</div>
 				</div>
 			</form>

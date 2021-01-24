@@ -52,10 +52,12 @@
 							<hr>
 							<p>${animal.content}</p>
 							<c:if test="${sessionScope.user.role eq 'USER'}">
-								<form name="login-form" class="login-form" action="add_animal" method="post">
-									<input type="hidden" name="command" value="add_animal" /> 
+								<form name="login-form" class="login-form" action="take_animal" method="post">
+									<input type="hidden" name="command" value="take_animal" /> 
 									<input type="hidden" name="id_animal" value="${animal.id}" /> 
 									<input type="submit" name="submit" value="${add}" class="button" />
+									<span class="header" style="color: green;">${animal_chose}</span>
+									<span class="header" style="color: red;">${animal_chose_error}</span>
 								</form>
 							</c:if>
 							<c:if test="${sessionScope.user.role eq 'ADMINISTRATOR'}">
