@@ -51,6 +51,16 @@ INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (1,
+'Default action',
+'nothing',
+'nothing',
+'nothing',
+0,
+0);
+INSERT INTO `edem_db`.`action`
+(`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
+VALUES
+(2,
 'Efficient Lighting',
 'Switching to LED lights alleviate the demand and pressure on the resources of the Earth.',
 'Replacing incandescent bulbs with CFLs and LEDs can reduce the amount of energy it takes to light your home by up to 90%. And CFLs and LEDs last 10 to 40 times longer than conventional bulbs, so you will reduce your trips to the store along with your energy bill!',
@@ -60,7 +70,7 @@ VALUES
 INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
-(2,
+(3,
 'Reusable Bags',
 'Before venturing out on your next shopping trip, make sure you’ve some reusable shopping bags with you.',
 'Lightweight reusable bags can fit in a purse or pocket, and they reduces waste, eliminate the energy and materials needed to make disposable packaging, and save money in areas where laws require retailers to charge customers extra for each bag.',
@@ -70,7 +80,7 @@ VALUES
 INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
-(3,
+(4,
 'Speedy Showers',
 'Have shorter showers. Don’t leave the tap running when you’re brushing your teeth. Buy an energy efficient showerhead. It all helps.',
 'Shorter showers save water, energy, and the sanity of anyone waiting to get in the bathroom. So save your singing for strolls around the neighborhood, and turn off the flow when you are soaping up and shaving all your naked nooks and crannies.',
@@ -80,7 +90,7 @@ VALUES
 INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
-(4,
+(5,
 'Hang-Dry Laundry',
 'Think of your grandmother when you do this. Most clothes shouldn’t be put in the dryer anyway.',
 'Hanging laundry up to dry saves energy and money, so investing in a drying rack or clothesline pays off quickly, particularly if you had otherwise use a coin-operated dryer. Avoiding the dryer also makes your favorite clothes last longer!',
@@ -90,7 +100,7 @@ VALUES
 INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
-(5,
+(6,
 'Public Transit',
 'Public transportation helps reduce gridlock and carbon emissions.',
 'Riding the rails and taking the bus can add productive tranquility to your commute hours, as well as save you substantial carbon and money over time, particularly if you live in an urban area where you can do away with your car entirely.',
@@ -100,7 +110,7 @@ VALUES
 INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
-(6,
+(7,
 'Less Red Meat',
 'Eating more whole grains, vegetables, fruits and nuts, and less red meats and processed foods does too. ',
 'Cows, goats and lambs burp up a lot of methane as they grow, which means that raising them for meat is bad for climate. Eating red meat just one day less a week will save most people even more emissions than driving a hybrid. Less red meat will also decrease other impacts on the environment, as well as reduce your risk of obesity, heart disease, diabetes and many cancers!',
@@ -110,7 +120,7 @@ VALUES
 INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
-(7,
+(8,
 'Reduce Food Waste',
 'Save food, and apply smarter ways about storage and preservation.',
 'Many households throw away 25% of the food they buy, which means all the energy, water, fertilizer and other inputs used to produce this food is also wasted. If not composted, food waste ends up in a landfill where it turns into methane pollution that contributes to climate change. Only buying what you will eat and finishing your leftovers is a great way to save money and the planet!',
@@ -120,7 +130,7 @@ VALUES
 INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
-(8,
+(9,
 'Reduce, Reuse, Recycle',
 'You can help reduce pollution just by putting that soda can in the recycling bin.',
 'Recycling metal, paper and plastic eliminates the need to mine raw materials, as well as the energy used to process rock, wood and petroleum into finished products. Contrary to popular opinion, recycling does actually matter. Beyond climate, recycling can save money on your waste bill, and even pay cash for redeemable items.',
@@ -130,7 +140,7 @@ VALUES
 INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
-(9,
+(10,
 'Telecommute',
 'Working a few days each month from home means one less commuter on the road contributing to greenhouse gases.',
 'Telecommuting to work is a great way to avoid hours of commute time, as well as thousands of pounds of CO2 and hundreds of dollars commuting. Free video conferencing and shared workspace tools like Skype and Google Hangout make it easier than ever to connect with the world without leaving your home!',
@@ -140,7 +150,7 @@ VALUES
 INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
-(10,
+(11,
 'Rechargeable Batteries',
 'Rechargeable batteries can be reused hundreds of times and the good ones can outperform the leading brand single-use batteries.',
 'Rechargeable batteries save resources, energy, money and waste. They are pretty much a no-brainer, at least if you are using batteries on a regular basis. What is not to love?',
