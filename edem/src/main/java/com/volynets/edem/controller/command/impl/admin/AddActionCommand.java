@@ -31,44 +31,44 @@ import com.volynets.edem.service.factory.ServiceFactory;
  */
 public class AddActionCommand implements Command {
 	private static final Logger LOGGER = LogManager.getLogger(AddActionCommand.class);
-	
-    private static final String TITLE = "title";
+
+	private static final String TITLE = "title";
 	private static final String DESC = "desc";
 	private static final String CONTENT = "content";
 	private static final String COUNT_CO2 = "count_co2";
 	private static final String LOGO_PATH = "/img/action/";
 	private static final String DESTINATION = "destination";
 	private static final String FILE = "file";
-	
+
 	private static final String RESULT = "result";
 	private static final String RESULT_ERROR = "result_error";
-	
+
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
 		ActionService actionService = serviceFactory.getActionService();
-		
+
 		String title = request.getParameter(TITLE);
 		String desc = request.getParameter(DESC);
 		String content = request.getParameter(CONTENT);
 		int countCO2 = Integer.parseInt(request.getParameter(COUNT_CO2));
-		
+
 		final Part filePart;
 		try {
 			filePart = request.getPart(FILE);
 		} catch (IOException | ServletException e) {
 			throw new ServiceException(e);
 		}
-		
+
 		final String fileName = getFileName(filePart);
 		String logoPathForSql = LOGO_PATH + fileName;
 		final String uploadPath = request.getParameter(DESTINATION);
-		
+
 		Action actionFromTable = actionService.findByTitle(title);
-		if (!actionFromTable.getTitle().equals(title)) {
+		if (actionFromTable == null) {
 			actionService.addAction(title, desc, content, logoPathForSql, countCO2);
 			uploadLogo(uploadPath, filePart, fileName);
-			
+
 			LOGGER.debug("Action " + title + " was successfully added.");
 			request.setAttribute(RESULT, "Action was successfully added.");
 		} else {
@@ -78,10 +78,10 @@ public class AddActionCommand implements Command {
 
 		return JspPath.ADD_ACTION.getUrl();
 	}
-	
+
 	private void uploadLogo(String path, Part filePart, String fileName) throws ServiceException {
 		try (OutputStream out = new FileOutputStream(new File(path + File.separator + fileName));
-				InputStream filecontent = filePart.getInputStream()){
+				InputStream filecontent = filePart.getInputStream()) {
 
 			int read = 0;
 			final byte[] bytes = new byte[1024];
@@ -98,7 +98,7 @@ public class AddActionCommand implements Command {
 			throw new ServiceException(e);
 		}
 	}
-	
+
 	private String getFileName(final Part part) {
 		final String partHeader = part.getHeader("content-disposition");
 		LOGGER.info("Part Header = {0}", partHeader);
