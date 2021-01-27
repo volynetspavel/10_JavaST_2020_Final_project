@@ -1,6 +1,6 @@
-USE `test_edem_db`;
+USE `edem_db`;
 
-CREATE TABLE `test_edem_db`.`account` (
+CREATE TABLE `edem_db`.`account` (
   `id` INT NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE `test_edem_db`.`account` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fkk_user`
     FOREIGN KEY (`id`)
-    REFERENCES `test_edem_db`.`user` (`id`)
+    REFERENCES `edem_db`.`user` (`id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB

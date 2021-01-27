@@ -1,4 +1,4 @@
-INSERT INTO `test_edem_db`.`animal` 
+INSERT INTO `edem_db`.`animal` 
 (`id`,`name`,`desc`,`content`,`logo`,`co2`) 
 VALUES 
 (1,
@@ -7,7 +7,7 @@ VALUES
 'Hunting of these bears caused a steep drop in populations in the 20th century. Each year the number of bears killed increased, as hunting technology grew more efficient. Hunting hit its peak in 1968 with over 1,250 bears killed. Hunting regulations helped to improve their population numbers.',
 '/img/animal/Polar-Bear-5-650x425.jpg',
 1500);
-INSERT INTO `test_edem_db`.`animal` 
+INSERT INTO `edem_db`.`animal` 
 (`id`,`name`,`desc`,`content`,`logo`,`co2`) 
 VALUES 
 (2,
@@ -16,7 +16,7 @@ VALUES
 'Narwhals were hunted by humans during the whaling era, and were especially prized for their long tusk. These marine mammals are still legally harvested by Inuit tribes, which use all parts of the animal for sustenance. Narwhal skin is one of the few sources of vitamin C available to Inuit people.',
 '/img/animal/Narwhal-6-650x425.jpg',
 1200);
-INSERT INTO `test_edem_db`.`animal` 
+INSERT INTO `edem_db`.`animal` 
 (`id`,`name`,`desc`,`content`,`logo`,`co2`) 
 VALUES 
 (3,
@@ -26,7 +26,7 @@ VALUES
 People’s activity on beaches also causes problems for these reptiles. When humans dig holes in the sand or leave garbage on the beach the hatchlings become trapped or entangled, making them easy pickings for predators.',
 '/img/animal/Sea-Turtle-3-650x425.jpg',
 1150);
-INSERT INTO `test_edem_db`.`animal` 
+INSERT INTO `edem_db`.`animal` 
 (`id`,`name`,`desc`,`content`,`logo`,`co2`) 
 VALUES 
 (4,
@@ -36,7 +36,7 @@ VALUES
 Unfortunately, that doesn’t mean that emperor penguins get off easy. While emperor penguin numbers are steady, the imminent threat of global climate change places these birds in jeopardy. Every year, as global temperatures increase, the pack ice these birds breed on gets thinner and smaller.',
 '/img/animal/Emperor-Penguin-3-650x425.jpg',
 900);
-INSERT INTO `test_edem_db`.`animal` 
+INSERT INTO `edem_db`.`animal` 
 (`id`,`name`,`desc`,`content`,`logo`,`co2`) 
 VALUES 
 (5,
@@ -47,7 +47,7 @@ Sadly, wolverines are still trapped and killed for their fur and to reduce their
 '/img/animal/Wolverine-6-650x425.jpg',
 1100);
 
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (1,
@@ -57,7 +57,7 @@ VALUES
 'nothing',
 0,
 0);
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (2,
@@ -67,7 +67,7 @@ VALUES
 '/img/action/Efficient-Lighting.jpg',
 1,
 10);
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (3,
@@ -77,7 +77,7 @@ VALUES
 '/img/action/Reusable-Bags.jpg',
 1,
 5);
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (4,
@@ -87,7 +87,7 @@ VALUES
 '/img/action/Speedy-Showers.jpg',
 1,
 10);
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (5,
@@ -97,7 +97,7 @@ VALUES
 '/img/action/Hang-Dry Laundry.jpg',
 1,
 5);
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (6,
@@ -107,7 +107,7 @@ VALUES
 '/img/action/Public-Transit.jpg',
 1,
 15);
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (7,
@@ -117,7 +117,7 @@ VALUES
 '/img/action/Less-Red-Meat.jpg',
 1,
 10);
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (8,
@@ -127,7 +127,7 @@ VALUES
 '/img/action/Reduce-Food-Waste.jpg',
 1,
 15);
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (9,
@@ -137,7 +137,7 @@ VALUES
 '/img/action/Recycle.jpeg',
 1,
 20);
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (10,
@@ -147,7 +147,7 @@ VALUES
 '/img/action/Telecommute.jpeg',
 1,
 10);
-INSERT INTO `test_edem_db`.`action`
+INSERT INTO `edem_db`.`action`
 (`id`,`title`,`desc`,`content`,`logo`,`comment`,`co2`)
 VALUES
 (11,
@@ -158,187 +158,187 @@ VALUES
 1,
 15);
 
-INSERT INTO `test_edem_db`.`account`
+INSERT INTO `edem_db`.`account`
 (`id`,`surname`,`name`,`avatar`) 
 VALUES 
 (1,'Petrov','Dmitriy','/img/avatar/Petrov.jpg');
-INSERT INTO `test_edem_db`.`account`
+INSERT INTO `edem_db`.`account`
 (`id`,`surname`,`name`,`avatar`)
 VALUES 
 (2,'Solnceva','Ekaterina','/img/avatar/Solnceva.jpg');
-INSERT INTO `test_edem_db`.`account`
+INSERT INTO `edem_db`.`account`
 (`id`,`surname`,`name`,`avatar`)
 VALUES 
 (3,'Balanceva','Svetlana','/img/avatar/Balanceva.jpg');
-INSERT INTO `test_edem_db`.`account`
+INSERT INTO `edem_db`.`account`
 (`id`,`surname`,`name`,`avatar`)
 VALUES 
 (4,'Nilonov','Boris','/img/avatar/Nilonov.jpg');
-INSERT INTO `test_edem_db`.`account`
+INSERT INTO `edem_db`.`account`
 (`id`,`surname`,`name`,`avatar`)
 VALUES 
 (5,'Rovnenko','Nikolai','/img/avatar/Rovnenko.jpg');
-INSERT INTO `test_edem_db`.`account`
+INSERT INTO `edem_db`.`account`
 (`id`,`surname`,`name`,`avatar`)
 VALUES 
 (6,'Globina','Anna','/img/avatar/Globina.jpg');
-INSERT INTO `test_edem_db`.`account`
+INSERT INTO `edem_db`.`account`
 (`id`,`surname`,`name`,`avatar`) 
 VALUES 
 (7,'Admin','Admin','/img/avatar/no_avatar.png');
 
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (1,
 'Some say the planet is sick and humans are the virus, it is undeniably we as a species have destroyed this beautiful planet at an alarming rate.',
 '2020-12-02',1,1);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (2,
 'There is a saying, everybody wants to change the world but nobody is ready to change themselves for the world. ',
 '2020-12-03',2,2);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (3,
 'Perhaps it is time for us to reflect on ourselves and ask, what have I done for mother nature? ',
 '2020-12-04',3,3);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (4,
 'It is all the little things that matters, and if everyone contributed indirectly, the planet will be a beautiful place to live it – less resources needs, less destruction and better environment.',
 '2020-12-05',4,4);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (5,
 'We do not inherit the earth from our ancestors, we borrow it from our children.',
 '2020-12-06',5,5);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (6,
 'Only after the last tree has been cut down. Only after the last river has been poisoned. Only after the last fish has been caught, only then will you find that money cannot be eaten.',
 '2020-12-07',6,6);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (7,
 'Tree are a poem the earth writes across the sky. Humanity cuts them down fro paper so we may record our emptiness.',
 '2020-12-08',1,7);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (8,
 'We are living on this planet as if we had another one to go.',
 '2020-12-09',2,8);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (9,
 'Earth provides enough to satisfy every man’s needs, but not every man’s greed.',
 '2020-12-10',3,9);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (10,
 'Look deep into nature and then you will understand everything better',
 '2020-12-10',4,10);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (11,
 'One touch of nature makes the whole world kin. ',
 '2020-12-11',5,1);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (12,
 'We are all visitors to this time, this place. We are just passing through. Our purpose here is to observe, to learn, to grow, to love, and then we return home',
 '2020-12-12',6,2);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (13,
 'If all insects and arthropods on Earth suddenly died, within 50 years all life on Earth would perish. If all humans on Earth suddenly died, within 50 years, all life would flourish. ',
 '2020-12-12',1,3);
-INSERT INTO `test_edem_db`.`comment`
+INSERT INTO `edem_db`.`comment`
 (`id`,`content`,`created`,`id_account`,`id_action`) 
 VALUES 
 (14,
 'We do not see nature with our eyes, but with our understandings and our hearts.',
 '2020-12-13',2,4);
 
-INSERT INTO `test_edem_db`.`usage`
+INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
 (1,1,5,15,1);
-INSERT INTO `test_edem_db`.`usage`
+INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
 (2,2,1,10,2);
-INSERT INTO `test_edem_db`.`usage`
+INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
 (3,3,6,10,3);
-INSERT INTO `test_edem_db`.`usage`
+INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
 (4,4,4,5,4);
-INSERT INTO `test_edem_db`.`usage`
+INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
 (5,5,8,20,5);
-INSERT INTO `test_edem_db`.`usage`
+INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
 (6,6,5,15,1);
-INSERT INTO `test_edem_db`.`usage`
+INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
 (7,1,9,10,1);
-INSERT INTO `test_edem_db`.`usage`
+INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
 (8,2,3,10,2);
-INSERT INTO `test_edem_db`.`usage`
+INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
 (9,3,8,20,3);
-INSERT INTO `test_edem_db`.`usage`
+INSERT INTO `edem_db`.`usage`
 (`id`,`id_account`,`id_action`,`reducedCO2`,`id_animal`)
 VALUES 
 (10,1,2,5,1);
 
 
-INSERT INTO test_edem_db.user 
+INSERT INTO edem_db.user 
 (`id`,`email`,`password`,`role`) 
 VALUES 
 (1,'user1@gmail.com','ee11cbb19052e40b07aac0ca060c23ee','USER');	/*	MD5 хэш пароля "user"*/
-INSERT INTO test_edem_db.user 
+INSERT INTO edem_db.user 
 (`id`,`email`,`password`,`role`) 
 VALUES 
 (2,'user2@gmail.com','ee11cbb19052e40b07aac0ca060c23ee','USER');
-INSERT INTO test_edem_db.user 
+INSERT INTO edem_db.user 
 (`id`,`email`,`password`,`role`) 
 VALUES 
 (3,'user3@gmail.com','ee11cbb19052e40b07aac0ca060c23ee','USER');
-INSERT INTO test_edem_db.user 
+INSERT INTO edem_db.user 
 (`id`,`email`,`password`,`role`) 
 VALUES 
 (4,'user4@gmail.com','ee11cbb19052e40b07aac0ca060c23ee','USER');
-INSERT INTO test_edem_db.user 
+INSERT INTO edem_db.user 
 (`id`,`email`,`password`,`role`) 
 VALUES 
 (5,'user5@gmail.com','ee11cbb19052e40b07aac0ca060c23ee','USER');
-INSERT INTO test_edem_db.user 
+INSERT INTO edem_db.user 
 (`id`,`email`,`password`,`role`) 
 VALUES 
 (6,'user6@gmail.com','ee11cbb19052e40b07aac0ca060c23ee','USER');
-INSERT INTO test_edem_db.user 
+INSERT INTO edem_db.user 
 (`id`,`email`,`password`,`role`) 
 VALUES 
 (7,'admin1@gmail.com','21232f297a57a5a743894a0e4a801fc3','ADMINISTRATOR'); 	/*	MD5 хэш пароля "admin"*/
