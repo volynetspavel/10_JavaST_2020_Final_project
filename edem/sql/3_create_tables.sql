@@ -1,19 +1,24 @@
-USE `edem_db`;
+USE `test_edem_db`;
 
-CREATE TABLE `account` (
-  `id` int NOT NULL,
-  `surname` varchar(45) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-  CONSTRAINT `fkk_user` FOREIGN KEY (`id`) REFERENCES `edem_db`.`user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `test_edem_db`.`account` (
+  `id` INT NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `avatar` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fkk_user`
+    FOREIGN KEY (`id`)
+    REFERENCES `test_edem_db`.`user` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE `action` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `desc` varchar(255) NOT NULL COMMENT 'short description',
-  `contenet` text NOT NULL,
+  `content` text NOT NULL,
   `logo` varchar(255) NOT NULL COMMENT 'link to picture for action',
   `comment` int NOT NULL DEFAULT '0' COMMENT 'count of comments in general page',
   `co2` int NOT NULL,
@@ -40,8 +45,9 @@ CREATE TABLE `comment` (
   KEY `id_account_idx` (`id_account`),
   KEY `id_action_idx` (`id_action`),
   CONSTRAINT `fk_account` FOREIGN KEY (`id_account`) REFERENCES `account` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `fk_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE) 
+  ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE `usage` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -56,7 +62,8 @@ CREATE TABLE `usage` (
   CONSTRAINT `fk_usage_account` FOREIGN KEY (`id_account`) REFERENCES `account` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_usage_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_usage_animal` FOREIGN KEY (`id_animal`) REFERENCES `animal` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)   ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -64,5 +71,5 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `role` enum('USER','ADMINISTRATOR') NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
