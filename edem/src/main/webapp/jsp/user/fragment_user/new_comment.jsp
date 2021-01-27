@@ -12,11 +12,16 @@
 		<img class="avatar" src="img/no_avatar.png" alt="anonym" /><br/>
 		<a href="javascript:gpLogout();" class="logout">Logout</a>
 	</div>
-	<div class="media-object-section" style="width: 100%;">
-		<textarea id="comment-content" name="comment-content" placeholder="${new_comment}"></textarea>
-		<span class="form-error">Comment is required. </span>
-		<a href="javascript:submitComment();" class="float-right button" style="margin:7px 0 0;">${submit}</a>
-	</div>
+	
+		<div class="media-object-section" style="width: 100%;">
+			<form action="add_comment" method="post">
+				<input type="hidden" name="command" value="add_comment">
+				<textarea id="comment-content" name="comment_content" placeholder="${new_comment}"></textarea>
+				<input type="hidden" name="id_action" value="${id}" /> 				
+				<input type="submit"  class="float-right button" style="margin:7px 0 0;" name="submit" value="${submit}"/>
+			</form>
+		</div>
+	
 </div>
 
 <div class="reveal" id="sigin-form" data-reveal>

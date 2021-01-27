@@ -55,7 +55,7 @@
 								<form name="login-form" class="login-form" action="take_animal" method="post">
 									<input type="hidden" name="command" value="take_animal" /> 
 									<input type="hidden" name="id_animal" value="${animal.id}" /> 
-									<input type="submit" name="submit" value="${add}" class="button" />
+									<input type="submit" name="submit" value="${add}" class="button" /></br>
 									<span class="header" style="color: green;">${animal_chose}</span>
 									<span class="header" style="color: red;">${animal_chose_error}</span>
 								</form>
