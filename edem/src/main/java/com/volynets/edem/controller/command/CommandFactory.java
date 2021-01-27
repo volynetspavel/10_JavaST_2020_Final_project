@@ -22,6 +22,7 @@ import com.volynets.edem.controller.command.impl.admin.UpdateActionCommand;
 import com.volynets.edem.controller.command.impl.admin.UpdateAnimalCommand;
 import com.volynets.edem.controller.command.impl.admin.ViewAllAccountsCommand;
 import com.volynets.edem.controller.command.impl.admin.VisitAddActionCommand;
+import com.volynets.edem.controller.command.impl.user.AddCommentCommand;
 import com.volynets.edem.controller.command.impl.user.CountCo2Command;
 import com.volynets.edem.controller.command.impl.user.TakeActionCommand;
 import com.volynets.edem.controller.command.impl.user.TakeAnimalCommand;
@@ -63,6 +64,7 @@ public class CommandFactory {
 		commandMap.put(CommandType.LANGUAGE, new LanguageCommand());
 		commandMap.put(CommandType.VISIT_ADD_ACTION, new VisitAddActionCommand());
 		commandMap.put(CommandType.ADD_ACTION, new AddActionCommand());
+		commandMap.put(CommandType.ADD_COMMENT, new AddCommentCommand());
 	}
 
 	public static CommandFactory getInstance() {
