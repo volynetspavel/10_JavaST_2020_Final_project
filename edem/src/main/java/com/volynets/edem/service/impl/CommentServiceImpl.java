@@ -1,14 +1,25 @@
 package com.volynets.edem.service.impl;
 
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.volynets.edem.connection.ConnectionPool;
+import com.volynets.edem.dao.AccountDao;
+import com.volynets.edem.dao.ActionDao;
+import com.volynets.edem.dao.AnimalDao;
 import com.volynets.edem.dao.CommentDao;
+import com.volynets.edem.dao.UserDao;
+import com.volynets.edem.dao.transaction.EntityTransaction;
+import com.volynets.edem.entity.Account;
+import com.volynets.edem.entity.Action;
+import com.volynets.edem.entity.Animal;
 import com.volynets.edem.entity.Comment;
+import com.volynets.edem.entity.Usage;
+import com.volynets.edem.entity.User;
 import com.volynets.edem.exception.DaoException;
 import com.volynets.edem.exception.ServiceException;
 import com.volynets.edem.service.AbstractService;
@@ -42,4 +53,44 @@ public class CommentServiceImpl extends AbstractService implements CommentServic
 		}
 	}
 
+	@Override
+	public void addNewComment(String content, Timestamp createdTime, int idAccount, int idAction)
+			throws ServiceException {
+		EntityTransaction transaction = new EntityTransaction();
+		
+		AccountDao accountDao = daoFactory.getAccountDao();
+		ActionDao actionDao = daoFactory.getActionDao();
+
+		Account account = null;
+		Action action = null;
+		Comment comment = new Comment();
+
+		try {
+			transaction.initTransaction(accountDao, actionDao, commentDao);
+			account = accountDao.findById(idAccount);
+			action = actionDao.findById(idAction);
+			
+			comment.setContent(content);
+			comment.setCreated(createdTime);
+			comment.setAccount(account);
+			comment.setAction(action);
+			
+			commentDao.insert(comment);
+
+			transaction.commit();
+		} catch (DaoException e) {
+			try {
+				transaction.rollback();
+			} catch (DaoException e1) {
+				throw new ServiceException(e);
+			}
+			throw new ServiceException(e);
+		} finally {
+			try {
+				transaction.endTransaction();
+			} catch (DaoException e) {
+				throw new ServiceException(e);
+			}
+		}
+	}
 }

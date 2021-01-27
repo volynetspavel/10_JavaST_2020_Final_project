@@ -62,15 +62,15 @@ public class AccountDaoImpl extends AccountDao {
 
 		try {
 			preparedStatement = connection.prepareStatement(SQL_UPDATE_ACCOUNT);
-			preparedStatement.setInt(1, entity.getUser().getId());
-			preparedStatement.setString(2, entity.getSurname());
-			preparedStatement.setString(3, entity.getName());
+			preparedStatement.setString(1, entity.getSurname());
+			preparedStatement.setString(2, entity.getName());
 
 			if (!entity.isAvatarExists()) {
-				preparedStatement.setString(4, entity.getNoAvatar());
+				preparedStatement.setString(3, entity.getNoAvatar());
 			} else {
-				preparedStatement.setString(4, entity.getAvatar());
+				preparedStatement.setString(3, entity.getAvatar());
 			}
+			preparedStatement.setInt(4, entity.getUser().getId());
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {

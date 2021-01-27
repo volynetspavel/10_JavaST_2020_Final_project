@@ -26,25 +26,25 @@ import com.volynets.edem.exception.DaoException;
 public class UsageDaoImpl extends UsageDao {
 	private static final Logger LOGGER = LogManager.getLogger(UsageDaoImpl.class);
 
-	private static final String SELECT_ALL_USAGES = "SELECT * FROM usage";
-	private static final String SQL_FIND_USAGE_BY_ID = "SELECT * FROM usage WHERE id=?";
-	private static final String SQL_DELETE_USAGE = "DELETE FROM usage WHERE id=?";
-	private static final String SQL_UPDATE_USAGE = "UPDATE usage "
+	private static final String SELECT_ALL_USAGES = "SELECT * FROM edem_db.usage";
+	private static final String SQL_FIND_USAGE_BY_ID = "SELECT * FROM edem_db.usage WHERE id=?";
+	private static final String SQL_DELETE_USAGE = "DELETE FROM edem_db.usage WHERE id=?";
+	private static final String SQL_UPDATE_USAGE = "UPDATE edem_db.usage "
 			+ "SET id_account=?, id_action=?, reducedCO2=?, id_animal=? WHERE id=?";
-	private static final String SQL_INSERT_USAGE = "INSERT into usage "
+	private static final String SQL_INSERT_USAGE = "INSERT into edem_db.usage "
 			+ "(id_account, id_action, reducedCO2, id_animal) VALUES (?, ?, ?, ?)";
 
 	private static final String SQL_SUM_CO2_FOR_USER_BY_ANIMAL = "SELECT SUM(reducedCO2) "
-			+ "FROM usage WHERE id_account=? AND id_animal=?;";
-    private static final String SQL_DELETE_USAGE_BY_ID_ACCOUNT = "DELETE FROM usage "
+			+ "FROM edem_db.usage WHERE id_account=? AND id_animal=?;";
+    private static final String SQL_DELETE_USAGE_BY_ID_ACCOUNT = "DELETE FROM edem_db.usage "
     		+ "WHERE id_account=?";
-    private static final String SQL_DELETE_USAGE_BY_ID_ACTION = "DELETE FROM usage "
+    private static final String SQL_DELETE_USAGE_BY_ID_ACTION = "DELETE FROM edem_db.usage "
     		+ "WHERE id_action=?";
-    private static final String SQL_DELETE_USAGE_BY_ID_ANIMAL = "DELETE FROM usage "
+    private static final String SQL_DELETE_USAGE_BY_ID_ANIMAL = "DELETE FROM edem_db.usage "
     		+ "WHERE id_animal=?";
-    private static final String SQL_FIND_ID_ANIMAL_BY_ID_USER = "SELECT id_animal FROM usage "
+    private static final String SQL_FIND_ID_ANIMAL_BY_ID_USER = "SELECT id_animal FROM edem_db.usage "
     		+ "WHERE id_account=?";
-    private static final String SQL_INSERT_ANIMAL_WITHOUT_ACTION_AND_CO2 = "INSERT into usage "
+    private static final String SQL_INSERT_ANIMAL_WITHOUT_ACTION_AND_CO2 = "INSERT into edem_db.usage "
 			+ "(id_account, id_action, reducedCO2, id_animal) VALUES (?, ?, ?, ?)";
 
 	@Override

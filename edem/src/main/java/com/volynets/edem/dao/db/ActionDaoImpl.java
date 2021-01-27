@@ -155,7 +155,7 @@ public class ActionDaoImpl extends ActionDao {
 
 	@Override
 	public Action findByTitle(String title) throws DaoException {
-		Action action = new Action();
+		Action action = null;
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -167,6 +167,7 @@ public class ActionDaoImpl extends ActionDao {
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
+				action = new Action();
 				action.setId(resultSet.getInt(1));
 				action.setTitle(resultSet.getString(2));
 				action.setDesc(resultSet.getString(3));

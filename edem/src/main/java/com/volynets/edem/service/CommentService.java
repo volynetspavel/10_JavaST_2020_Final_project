@@ -1,6 +1,7 @@
 package com.volynets.edem.service;
 
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.volynets.edem.entity.Comment;
@@ -15,4 +16,5 @@ import com.volynets.edem.exception.ServiceException;
 public interface CommentService {
 	List<Comment> findByActionId(int id) throws ServiceException;
 
+	void addNewComment(String content, Timestamp createdTime, int idAccount, int idAction) throws ServiceException;
 }

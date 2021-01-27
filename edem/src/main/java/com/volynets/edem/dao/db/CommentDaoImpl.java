@@ -30,7 +30,7 @@ public class CommentDaoImpl extends CommentDao {
 	private static final String SQL_DELETE_COMMENT = "DELETE FROM comment WHERE id=?";
 	private static final String SQL_UPDATE_COMMENT = "UPDATE comment "
 			+ "SET `content`=?, `created`=?, `id_account`=?, `id_action`=? WHERE id=?";
-    private static final String SQL_INSERT_COMMENT = "INSERT into edem_db. "
+    private static final String SQL_INSERT_COMMENT = "INSERT into comment "
     		+ "(`content`,`created`,`id_account`,`id_action`) VALUES (?, ?, ?, ?)";
     private static final String SQL_DELETE_COMMENT_BY_ID_ACCOUNT = "DELETE FROM comment "
     		+ "WHERE id_account=?";
@@ -46,11 +46,10 @@ public class CommentDaoImpl extends CommentDao {
 
         try {
             preparedStatement = connection.prepareStatement(SQL_INSERT_COMMENT);
-			preparedStatement.setInt(1, entity.getId());
-			preparedStatement.setString(2, entity.getContent());
-			preparedStatement.setTimestamp(3, entity.getCreated());
-			preparedStatement.setInt(4, entity.getAccount().getId());
-			preparedStatement.setInt(5, entity.getAction().getId());
+			preparedStatement.setString(1, entity.getContent());
+			preparedStatement.setTimestamp(2, entity.getCreated());
+			preparedStatement.setInt(3, entity.getAccount().getUser().getId());
+			preparedStatement.setInt(4, entity.getAction().getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -214,10 +213,10 @@ public class CommentDaoImpl extends CommentDao {
 		AbstractDao<Account> accountDao = new AccountDaoImpl();
 		accountDao.setConnection(connection);
 		AbstractDao<Action> actionDao = new ActionDaoImpl();
-		actionDao.setConnection(connection);;
+		actionDao.setConnection(connection);
 		
-		List<Comment> comments = new ArrayList<Comment>();
-		Comment comment = new Comment();
+		List<Comment> comments = new ArrayList<>();
+		Comment comment = null;
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -228,6 +227,7 @@ public class CommentDaoImpl extends CommentDao {
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
+				comment = new Comment();
 				comment.setId(resultSet.getInt(1));
 				comment.setContent(resultSet.getString(2));
 				comment.setCreated(resultSet.getTimestamp(3));
