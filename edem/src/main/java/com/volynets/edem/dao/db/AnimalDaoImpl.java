@@ -23,14 +23,14 @@ import com.volynets.edem.exception.ServiceException;
 public class AnimalDaoImpl extends AnimalDao {
 	private static final Logger LOGGER = LogManager.getLogger(AnimalDaoImpl.class);
 
-	private static final String SELECT_ALL_ANIMALS = "SELECT * FROM edem_db.animal";
-	private static final String SQL_FIND_ANIMAL_BY_ID = "SELECT * FROM edem_db.animal WHERE id=?";
-	private static final String SQL_DELETE_ANIMAL = "DELETE FROM edem_db.animal WHERE id=?";
-	private static final String SQL_UPDATE_ANIMAL = "UPDATE edem_db.animal "
+	private static final String SELECT_ALL_ANIMALS = "SELECT * FROM animal";
+	private static final String SQL_FIND_ANIMAL_BY_ID = "SELECT * FROM animal WHERE id=?";
+	private static final String SQL_DELETE_ANIMAL = "DELETE FROM animal WHERE id=?";
+	private static final String SQL_UPDATE_ANIMAL = "UPDATE animal "
 			+ "SET `name`=?, `desc`=?, `content`=?, `logo`=?, `co2`=? WHERE id=?";
-	private static final String SQL_INSERT_ANIMAL = "INSERT INTO edem_db.animal "
+	private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal "
 			+ "(`name`,`desc`,`content`,`logo`,`co2`) VALUES (?, ?, ?, ?, ?)";
-	private static final String SQL_FIND_ANIMAL_BY_NAME = "SELECT * FROM edem_db.animal WHERE name=?";
+	private static final String SQL_FIND_ANIMAL_BY_NAME = "SELECT * FROM animal WHERE name=?";
 
 	@Override
 	public void insert(Animal entity) throws DaoException {

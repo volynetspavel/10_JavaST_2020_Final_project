@@ -22,14 +22,14 @@ import com.volynets.edem.exception.DaoException;
 public class ActionDaoImpl extends ActionDao {
 	private static final Logger LOGGER = LogManager.getLogger(ActionDaoImpl.class);
 
-	private static final String SELECT_ALL_ACTIONS = "SELECT * FROM edem_db.action";
-	private static final String SQL_FIND_ACTION_BY_ID = "SELECT * FROM edem_db.action WHERE id=?";
-	private static final String SQL_DELETE_ACTION = "DELETE FROM edem_db.action WHERE id=?";
-	private static final String SQL_UPDATE_ACTION = "UPDATE edem_db.action "
+	private static final String SELECT_ALL_ACTIONS = "SELECT * FROM action";
+	private static final String SQL_FIND_ACTION_BY_ID = "SELECT * FROM action WHERE id=?";
+	private static final String SQL_DELETE_ACTION = "DELETE FROM action WHERE id=?";
+	private static final String SQL_UPDATE_ACTION = "UPDATE action "
 			+ "SET `title`=?, `desc`=?, `content`=?, `logo`=?, `comment`=?, co2=? WHERE id=?";
-	private static final String SQL_INSERT_ACTION = "INSERT into edem_db.action "
+	private static final String SQL_INSERT_ACTION = "INSERT into action "
 			+ "(`title`,`desc`,`content`,`logo`,`comment`,`co2`) VALUES (?, ?, ?, ?, ?, ?)";
-	private static final String SQL_FIND_ACTION_BY_TITLE = "SELECT * FROM edem_db.action WHERE title=?";
+	private static final String SQL_FIND_ACTION_BY_TITLE = "SELECT * FROM action WHERE title=?";
 
 	@Override
 	public void insert(Action entity) throws DaoException {

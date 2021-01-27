@@ -25,18 +25,18 @@ import com.volynets.edem.exception.DaoException;
 public class CommentDaoImpl extends CommentDao {
 	private static final Logger LOGGER = LogManager.getLogger(CommentDaoImpl.class);
 
-	private static final String SELECT_ALL_COMMENTS = "SELECT * FROM edem_db.comment";
-	private static final String SQL_FIND_COMMENT_BY_ID = "SELECT * FROM edem_db.comment WHERE id=?";
-	private static final String SQL_DELETE_COMMENT = "DELETE FROM edem_db.comment WHERE id=?";
-	private static final String SQL_UPDATE_COMMENT = "UPDATE edem_db.comment "
+	private static final String SELECT_ALL_COMMENTS = "SELECT * FROM comment";
+	private static final String SQL_FIND_COMMENT_BY_ID = "SELECT * FROM comment WHERE id=?";
+	private static final String SQL_DELETE_COMMENT = "DELETE FROM comment WHERE id=?";
+	private static final String SQL_UPDATE_COMMENT = "UPDATE comment "
 			+ "SET `content`=?, `created`=?, `id_account`=?, `id_action`=? WHERE id=?";
     private static final String SQL_INSERT_COMMENT = "INSERT into edem_db. "
     		+ "(`content`,`created`,`id_account`,`id_action`) VALUES (?, ?, ?, ?)";
-    private static final String SQL_DELETE_COMMENT_BY_ID_ACCOUNT = "DELETE FROM edem_db.comment "
+    private static final String SQL_DELETE_COMMENT_BY_ID_ACCOUNT = "DELETE FROM comment "
     		+ "WHERE id_account=?";
-    private static final String SQL_DELETE_COMMENT_BY_ID_ACTION = "DELETE FROM edem_db.comment "
+    private static final String SQL_DELETE_COMMENT_BY_ID_ACTION = "DELETE FROM comment "
     		+ "WHERE id_action=?";
-	private static final String SQL_FIND_COMMENTS_BY_ID_ACTION = "SELECT * FROM edem_db.comment "
+	private static final String SQL_FIND_COMMENTS_BY_ID_ACTION = "SELECT * FROM comment "
 			+ "WHERE id_action=?";
     
 

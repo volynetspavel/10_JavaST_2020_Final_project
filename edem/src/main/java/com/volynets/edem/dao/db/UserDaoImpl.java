@@ -23,16 +23,16 @@ import com.volynets.edem.exception.DaoException;
 public class UserDaoImpl extends UserDao {
 	private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
 
-	private static final String SELECT_ALL_USERS = "SELECT * FROM edem_db.user";
-	private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM edem_db.user WHERE id=?";
-	private static final String SQL_DELETE_USER = "DELETE FROM edem_db.user WHERE id=?";
-	private static final String SQL_UPDATE_USER = "UPDATE edem_db.user "
+	private static final String SELECT_ALL_USERS = "SELECT * FROM user";
+	private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM user WHERE id=?";
+	private static final String SQL_DELETE_USER = "DELETE FROM user WHERE id=?";
+	private static final String SQL_UPDATE_USER = "UPDATE user "
 			+ "SET `email`=?, `password`=?, `role`=? WHERE id=?";
-	private static final String SQL_INSERT_USER = "INSERT into edem_db.user "
+	private static final String SQL_INSERT_USER = "INSERT into user "
 			+ "(`email`,`password`,`role`) VALUES (?, ?, ?)";
-	private static final String SQL_FIND_USER_BY_EMAIL_AND_PASS = "SELECT * FROM edem_db.user "
+	private static final String SQL_FIND_USER_BY_EMAIL_AND_PASS = "SELECT * FROM user "
 			+ "WHERE email=? AND password=? ";
-	private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM edem_db.user WHERE email=?";
+	private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?";
 
 	@Override
 	public void insert(User entity) throws DaoException {

@@ -26,11 +26,11 @@ import com.volynets.edem.exception.DaoException;
 public class AccountDaoImpl extends AccountDao {
 	private static final Logger LOGGER = LogManager.getLogger(AccountDaoImpl.class);
 
-	private static final String SELECT_ALL_ACCOUNTS = "SELECT * FROM edem_db.account";
-	private static final String SQL_FIND_ACCOUNT_BY_ID = "SELECT * FROM edem_db.account WHERE id=?";
-	private static final String SQL_DELETE_ACCOUNT = "DELETE FROM edem_db.account WHERE id=?";
-	private static final String SQL_UPDATE_ACCOUNT = "UPDATE edem_db.account SET `surname`=?, `name`=?, `avatar`=? WHERE id=?";
-	private static final String SQL_INSERT_ACCOUNT = "INSERT into edem_db.account (`id`,`surname`,`name`,`avatar`) VALUES (?, ?, ?, ?)";
+	private static final String SELECT_ALL_ACCOUNTS = "SELECT * FROM account";
+	private static final String SQL_FIND_ACCOUNT_BY_ID = "SELECT * FROM account WHERE id=?";
+	private static final String SQL_DELETE_ACCOUNT = "DELETE FROM account WHERE id=?";
+	private static final String SQL_UPDATE_ACCOUNT = "UPDATE account SET `surname`=?, `name`=?, `avatar`=? WHERE id=?";
+	private static final String SQL_INSERT_ACCOUNT = "INSERT into account (`id`,`surname`,`name`,`avatar`) VALUES (?, ?, ?, ?)";
 
 	@Override
 	public void insert(Account entity) throws DaoException {
