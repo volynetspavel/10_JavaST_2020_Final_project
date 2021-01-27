@@ -1,0 +1,1 @@
+CREATE DATABASE `test_edem_db` DEFAULT CHARACTER SET utf8;
