@@ -36,7 +36,7 @@ CREATE TABLE `animal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `comment` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `content` text NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_account` int NOT NULL,
