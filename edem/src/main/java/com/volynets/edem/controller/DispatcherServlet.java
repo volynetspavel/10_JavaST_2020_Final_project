@@ -30,7 +30,7 @@ import com.volynets.edem.exception.ServiceException;
 @WebServlet(urlPatterns = { "/sign_in", "/sign_out", "/view_actions", "/view_accounts", "/watch_action",
 		"/view_animals", "/take_action", "/visit_registration", "/registration", "/language",
 		"/delete_account", "/delete_action", "/delete_animal", "/take_animal", "/visit_add_action",
-		"/add_action"})
+		"/add_action", "/add_comment"})
 @MultipartConfig
 public class DispatcherServlet extends HttpServlet {
 	private static final Logger LOGGER = LogManager.getLogger(DispatcherServlet.class);
