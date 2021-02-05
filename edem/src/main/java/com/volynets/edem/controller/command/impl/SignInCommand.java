@@ -63,7 +63,7 @@ public class SignInCommand implements Command {
 
 					request.getSession().setAttribute(USER, user);
 					request.setAttribute(USER, account.getName());
-					page = JspPath.HOME_USER.getUrl();
+					page = JspPath.ABOUT.getUrl();
 				} else {
 					LOGGER.info("User " + account.getSurname() + " with email " + user.getEmail() + " signed in.");
 
