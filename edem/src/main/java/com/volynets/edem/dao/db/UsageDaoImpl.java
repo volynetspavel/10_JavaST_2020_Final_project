@@ -46,6 +46,10 @@ public class UsageDaoImpl extends UsageDao {
     		+ "WHERE id_account=?";
     private static final String SQL_INSERT_ANIMAL_WITHOUT_ACTION_AND_CO2 = "INSERT into edem_db.usage "
 			+ "(id_account, id_action, reducedCO2, id_animal) VALUES (?, ?, ?, ?)";
+    private static final String SQL_SELECT_ACTIONS_BY_USER_ID = "SELECT "
+    		+ "action.id, action.title, action.desc, action.content, action.logo, action.comment, action.co2 FROM action"
+    		+ " JOIN edem_db.usage ON action.id = edem_db.usage.id_action"
+    		+ " WHERE edem_db.usage.id_account=?";
 
 	@Override
 	public void insert(Usage entity) throws DaoException {
@@ -313,5 +317,38 @@ public class UsageDaoImpl extends UsageDao {
 		} finally {
 			closePreparedStatement(preparedStatement);
 		}
+	}
+
+	@Override
+	public List<Action> findActionsByUserId(int idUser) throws DaoException {
+		List<Action> actions = new ArrayList<>();
+
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_SELECT_ACTIONS_BY_USER_ID);
+			preparedStatement.setInt(1, idUser);
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				Action action = new Action();
+
+				action.setId(resultSet.getInt(1));
+				action.setTitle(resultSet.getString(2));
+				action.setDesc(resultSet.getString(3));
+				action.setContent(resultSet.getString(4));
+				action.setLogo(resultSet.getString(5));
+				action.setComments(resultSet.getInt(6));
+				action.setCo2(resultSet.getInt(7));
+
+				actions.add(action);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		}
+		closeResultSet(resultSet);
+		closePreparedStatement(preparedStatement);
+		return actions;
 	}
 }

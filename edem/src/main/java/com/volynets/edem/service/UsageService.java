@@ -1,5 +1,8 @@
 package com.volynets.edem.service;
 
+import java.util.List;
+
+import com.volynets.edem.entity.Action;
 import com.volynets.edem.entity.Animal;
 import com.volynets.edem.exception.ServiceException;
 
@@ -20,4 +23,5 @@ public interface UsageService {
 	
 	void takeAnimal(int idAnimal, int idUser) throws ServiceException;
 
+	List<Action> findActionsByUserId(int idUser) throws ServiceException;
 }

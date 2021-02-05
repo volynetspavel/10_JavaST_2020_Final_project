@@ -1,6 +1,10 @@
 package com.volynets.edem.service.impl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -160,5 +164,22 @@ public class UsageServiceImpl extends AbstractService implements UsageService {
 		} finally {
 			ConnectionPool.getInstance().returnConnection(connection);
 		}
+	}
+
+	@Override
+	public List<Action> findActionsByUserId(int idUser) throws ServiceException {
+		Connection connection = ConnectionPool.getInstance().takeConnection();
+		usageDao.setConnection(connection);
+		
+		List<Action> actions = null;
+
+		try {
+			actions = usageDao.findActionsByUserId(idUser);
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+		return actions;
 	}
 }

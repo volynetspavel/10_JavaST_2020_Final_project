@@ -1,5 +1,8 @@
 package com.volynets.edem.dao;
 
+import java.util.List;
+
+import com.volynets.edem.entity.Action;
 import com.volynets.edem.entity.Usage;
 import com.volynets.edem.exception.DaoException;
 
@@ -21,4 +24,6 @@ public abstract class UsageDao extends AbstractDao<Usage> {
 	public abstract int findIdAnimalByIdUser(int idUser) throws DaoException;
 	
 	public abstract void takeAnimal(int idAnimal, int idUser) throws DaoException;
+	
+	public abstract List<Action> findActionsByUserId(int idUser) throws DaoException;
 }
