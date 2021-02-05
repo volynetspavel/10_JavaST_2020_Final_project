@@ -20,15 +20,25 @@ import com.volynets.edem.exception.ServiceException;
 public class LanguageCommand implements Command {
 	private static final Logger LOGGER = LogManager.getLogger(LanguageCommand.class);
 	private static final String LOCAL = "local";
-	private static final String CURRENT_PATH = "current_path";
+    private static final String RESPONSE = "response";
+	private static final String COMMAND = "command";
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 		String language = request.getParameter(LOCAL);
 		request.getSession().setAttribute(LOCAL, language);
-		String page = request.getParameter(CURRENT_PATH).replace("http://localhost:8080/edem", "");
+		
+		String page = request.getHeader("Referer");
 		
 		LOGGER.info("Language changed into " + language);
+        request.setAttribute(RESPONSE, true);
+        
+        String previousCommand = (String) request.getSession().getAttribute(COMMAND);
+        request.setAttribute(COMMAND, previousCommand);
+        
+        if (!page.contains("?")) {
+            page = page + "?command=" + previousCommand;
+		}
 		return page;
 	}
 
