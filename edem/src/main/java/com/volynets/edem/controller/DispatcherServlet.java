@@ -28,9 +28,9 @@ import com.volynets.edem.exception.ServiceException;
  * @version 1.0
  */
 @WebServlet(urlPatterns = { "/sign_in", "/sign_out", "/view_actions", "/view_accounts", "/watch_action",
-		"/view_animals", "/take_action", "/visit_registration", "/registration", "/language",
-		"/delete_account", "/delete_action", "/delete_animal", "/take_animal", "/visit_add_action",
-		"/add_action", "/add_comment"})
+		"/view_animals", "/take_action", "/visit_registration", "/registration", "/language", "/delete_account",
+		"/delete_action", "/delete_animal", "/take_animal", "/visit_add_action", "/add_action", "/add_comment",
+		"/about", "/account", "/history"})
 @MultipartConfig
 public class DispatcherServlet extends HttpServlet {
 	private static final Logger LOGGER = LogManager.getLogger(DispatcherServlet.class);
@@ -38,6 +38,7 @@ public class DispatcherServlet extends HttpServlet {
 	private static final String COMMAND = "command";
 	private static final String ERROR = "error";
 	private static final String STATUS_CODE = "statusCode";
+	private static final String RESPONSE = "response";
 
 	@Override
 	public void init() throws ServletException {
@@ -62,6 +63,9 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			if (request.getParameter(COMMAND) != null) {
 				LOGGER.info("Request. Parameter command = " + request.getParameter(COMMAND));
+				if (!request.getParameter(COMMAND).equals("language")) {
+					request.getSession().setAttribute(COMMAND, request.getParameter(COMMAND));
+				}
 				Command command = commandFactory.receiveCommand(request.getParameter(COMMAND));
 				page = command.execute(request, response);
 			} else {
@@ -77,8 +81,14 @@ public class DispatcherServlet extends HttpServlet {
 			page = JspPath.ERROR.getUrl();
 		}
 
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-		dispatcher.forward(request, response);
+		if (page != null) {
+			if (request.getAttribute(RESPONSE) != null && (boolean) request.getAttribute(RESPONSE)) {
+				response.sendRedirect(page);
+			} else {
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+				dispatcher.forward(request, response);
+			}
+		}
 	}
 
 	@Override
@@ -89,7 +99,7 @@ public class DispatcherServlet extends HttpServlet {
 			LOGGER.error(e.getMessage(), e);
 		}
 	}
-	
+
 	public String getCurrentJspPath() {
 		return getServletContext().getRealPath("");
 	}
