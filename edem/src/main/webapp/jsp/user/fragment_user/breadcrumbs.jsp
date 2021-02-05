@@ -13,12 +13,6 @@
 
 <ul class="breadcrumbs">
 	<li>
-		<form action="account" method="post">
-			<input type="hidden" name="command" value="account" /> 
-			<input type="submit" name="submit" value="${account }" class="button" />
-		</form>
-	</li>
-	<li>
 		<form action="view_actions" method="post">
 			<input type="hidden" name="command" value="view_actions" /> 
 			<input type="submit" name="submit" value="${view_actions }" class="button" />

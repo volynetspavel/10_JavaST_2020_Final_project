@@ -42,7 +42,9 @@
 		<div id="mainContent" class="large-10 columns" style="min-height: 600px;">
 			<c:forEach items="${actions}" var="action">
 				<div class="article thumbnail">
-					<img src="./.${action.logo}" alt="${action.title}" />
+					<figure style="text-align: center">
+						<img src="./.${action.logo}" alt="${action.title}" width="650" height="425"/>
+					</figure>
 					<div class="data">
 						<h3>${action.title}</h3>
 						<ul class="vertical large-horizontal menu">
@@ -93,10 +95,19 @@
 				<li class="pagination-next"><a href="#" aria-label="Next page">Next</a></li>
 			</ul>
 		</div>
+		
+		<c:if test="${sessionScope.user.role eq 'USER'}">
+			<jsp:include page="user/fragment_user/breadcrumbs_account.jsp" />
+		</c:if>
+		
 	</section>
 	<footer class="footer">
 		<jsp:include page="fragment/footer.jsp" />
 	</footer>
+	<script src="./js/jquery.js"></script>
+	<script src="./js/what-input.js"></script>
+	<script src="./js/foundation.js"></script>
+	<script src="./js/app.js"></script>
 </body>
 </html>
 

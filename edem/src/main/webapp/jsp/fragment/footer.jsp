@@ -8,7 +8,7 @@
 <fmt:message key="footer.copyright" var="copyright" />
 
 <div class="row">
-	<div class="container">
+	<div class="copywrite">
 		<h4>${copyright}</h4>
 	</div>
 </div>

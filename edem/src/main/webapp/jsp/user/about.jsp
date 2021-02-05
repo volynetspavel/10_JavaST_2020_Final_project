@@ -5,6 +5,8 @@
 <fmt:setBundle basename="text" />
 
 <fmt:message key="home_user.title_page" var="title_page" />
+<fmt:message key="about.title" var="title_page" />
+<fmt:message key="about.content" var="content" />
 
 <html>
 <head>
@@ -26,8 +28,12 @@
 	</div>
 	<section class="row">
 		<div id="mainContent" class="large-10 columns" style="min-height: 600px;">
-			<jsp:include page="about.jsp" />
+			<div class="callout">
+				<h3>${title_page}</h3>
+				<p>${content}</p>
+			</div>
 		</div>
+		<jsp:include page="fragment_user/breadcrumbs_account.jsp" />
 	</section>
 	<footer class="footer">
 		<jsp:include page="../fragment/footer.jsp" />

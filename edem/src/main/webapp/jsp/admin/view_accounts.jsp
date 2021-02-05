@@ -32,7 +32,9 @@
 			<c:forEach items="${accounts}" var="account">
 				<c:if test="${account.user.role eq 'USER'}">
 					<div class="article thumbnail">
-						<img src="./.${account.avatar}" alt="${account.name}" />
+						<figure style="text-align: center">
+							<img src="./.${account.avatar}" alt="${account.name}" width="400" height="350" />
+						</figure>
 						<div class="data">
 							<h3>${account.surname}</h3>
 							<h3>${account.name}</h3>
