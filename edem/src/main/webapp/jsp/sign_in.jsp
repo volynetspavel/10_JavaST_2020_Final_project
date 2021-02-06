@@ -45,12 +45,8 @@
 			<div class="footer">
 				<form action="registration" method="post">
 					<input type="hidden" name="command" value="visit_registration" />
-					<input type="submit" name="submit" value="${registration}" class="register" />
+					<input type="submit" name="submit" value="${registration}" class="register" style="color: green;"/>
 				</form>
-			</div>
-		</div>
-		<div class="login-form">
-			<div  class="footer" style="background: #80ff80;">
 				<form action="language" method="post">
 					<input type="hidden" name="local" value="ru_RU" />
 					<input type="hidden" name="command" value="language" />
