@@ -29,8 +29,8 @@ import com.volynets.edem.exception.ServiceException;
  */
 @WebServlet(urlPatterns = { "/sign_in", "/sign_out", "/view_actions", "/view_accounts", "/watch_action",
 		"/view_animals", "/take_action", "/visit_registration", "/registration", "/language", "/delete_account",
-		"/delete_action", "/delete_animal", "/take_animal", "/visit_add_action", "/add_action", "/add_comment",
-		"/about", "/account", "/history"})
+		"/delete_action", "/delete_animal", "/take_animal", "/visit_add_action",  "/visit_add_animal", 
+		"/add_action", "/add_animal", "/add_comment", "/about", "/account", "/history"})
 @MultipartConfig
 public class DispatcherServlet extends HttpServlet {
 	private static final Logger LOGGER = LogManager.getLogger(DispatcherServlet.class);
@@ -39,6 +39,7 @@ public class DispatcherServlet extends HttpServlet {
 	private static final String ERROR = "error";
 	private static final String STATUS_CODE = "statusCode";
 	private static final String RESPONSE = "response";
+	private static final String LANGUAGE = "language";
 
 	@Override
 	public void init() throws ServletException {
@@ -63,7 +64,7 @@ public class DispatcherServlet extends HttpServlet {
 		try {
 			if (request.getParameter(COMMAND) != null) {
 				LOGGER.info("Request. Parameter command = " + request.getParameter(COMMAND));
-				if (!request.getParameter(COMMAND).equals("language")) {
+				if (!request.getParameter(COMMAND).equals(LANGUAGE)) {
 					request.getSession().setAttribute(COMMAND, request.getParameter(COMMAND));
 				}
 				Command command = commandFactory.receiveCommand(request.getParameter(COMMAND));
@@ -98,9 +99,5 @@ public class DispatcherServlet extends HttpServlet {
 		} catch (ConnectionPoolException e) {
 			LOGGER.error(e.getMessage(), e);
 		}
-	}
-
-	public String getCurrentJspPath() {
-		return getServletContext().getRealPath("");
 	}
 }

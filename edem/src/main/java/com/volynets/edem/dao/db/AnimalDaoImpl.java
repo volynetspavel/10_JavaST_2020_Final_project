@@ -152,7 +152,7 @@ public class AnimalDaoImpl extends AnimalDao {
 
 	@Override
 	public Animal findByName(String name) throws DaoException {
-		Animal animal = new Animal();
+		Animal animal = null;
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -164,6 +164,7 @@ public class AnimalDaoImpl extends AnimalDao {
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
+				animal = new Animal();
 				animal.setId(resultSet.getInt(1));
 				animal.setName(resultSet.getString(2));
 				animal.setDesc(resultSet.getString(3));

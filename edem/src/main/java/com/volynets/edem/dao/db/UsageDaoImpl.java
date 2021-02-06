@@ -49,7 +49,7 @@ public class UsageDaoImpl extends UsageDao {
     private static final String SQL_SELECT_ACTIONS_BY_USER_ID = "SELECT "
     		+ "action.id, action.title, action.desc, action.content, action.logo, action.comment, action.co2 FROM action"
     		+ " JOIN edem_db.usage ON action.id = edem_db.usage.id_action"
-    		+ " WHERE edem_db.usage.id_account=?";
+    		+ " WHERE edem_db.usage.id_account=? AND action.title NOT IN ('Default action')";
 
 	@Override
 	public void insert(Usage entity) throws DaoException {

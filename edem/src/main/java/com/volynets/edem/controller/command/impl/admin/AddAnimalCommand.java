@@ -17,25 +17,25 @@ import org.apache.logging.log4j.Logger;
 
 import com.volynets.edem.controller.command.Command;
 import com.volynets.edem.controller.command.JspPath;
-import com.volynets.edem.entity.Action;
+import com.volynets.edem.entity.Animal;
 import com.volynets.edem.exception.ServiceException;
-import com.volynets.edem.service.ActionService;
+import com.volynets.edem.service.AnimalService;
 import com.volynets.edem.service.factory.ServiceFactory;
 
 /**
- * This class is used for adding new action.
+ * This class is used for adding new animal.
  * 
  * @author Pavel Volynets
  * @version 1.0
  */
-public class AddActionCommand implements Command {
-	private static final Logger LOGGER = LogManager.getLogger(AddActionCommand.class);
+public class AddAnimalCommand implements Command {
+	private static final Logger LOGGER = LogManager.getLogger(AddAnimalCommand.class);
 
-	private static final String TITLE = "title";
+	private static final String NAME = "name";
 	private static final String DESC = "desc";
 	private static final String CONTENT = "content";
 	private static final String COUNT_CO2 = "count_co2";
-	private static final String LOGO_PATH = "/img/action/";
+	private static final String LOGO_PATH = "/img/animal/";
 	private static final String DESTINATION = "destination";
 	private static final String FILE = "file";
 
@@ -45,9 +45,9 @@ public class AddActionCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
 		ServiceFactory serviceFactory = ServiceFactory.getInstance();
-		ActionService actionService = serviceFactory.getActionService();
+		AnimalService animalService = serviceFactory.getAnimalService();
 
-		String title = request.getParameter(TITLE);
+		String name = request.getParameter(NAME);
 		String desc = request.getParameter(DESC);
 		String content = request.getParameter(CONTENT);
 		int countCO2 = Integer.parseInt(request.getParameter(COUNT_CO2));
@@ -63,19 +63,19 @@ public class AddActionCommand implements Command {
 		String logoPathForSql = LOGO_PATH + fileName;
 		final String uploadPath = request.getParameter(DESTINATION);
 
-		Action actionFromTable = actionService.findByTitle(title);
-		if (actionFromTable == null) {
-			actionService.addAction(title, desc, content, logoPathForSql, countCO2);
+		Animal animalFromTable = animalService.findByName(name);
+		if (animalFromTable == null) {
+			animalService.addAnimal(name, desc, content, logoPathForSql, countCO2);
 			uploadLogo(uploadPath, filePart, fileName);
 
-			LOGGER.debug("Action " + title + " was successfully added.");
-			request.setAttribute(RESULT, "Action was successfully added.");
+			LOGGER.debug("Animal " + name + " was successfully added.");
+			request.setAttribute(RESULT, "Animal was successfully added.");
 		} else {
-			LOGGER.debug("Action " + title + " has already existed.");
-			request.setAttribute(RESULT_ERROR, "Action has already existed.");
+			LOGGER.debug("Animal " + name + " has already existed.");
+			request.setAttribute(RESULT_ERROR, "Animal has already existed.");
 		}
 
-		return JspPath.ADD_ACTION.getUrl();
+		return JspPath.ADD_ANIMAL.getUrl();
 	}
 
 	private void uploadLogo(String path, Part filePart, String fileName) throws ServiceException {

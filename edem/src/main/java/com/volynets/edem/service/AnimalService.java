@@ -21,4 +21,6 @@ public interface AnimalService {
 	Animal findById(int id) throws ServiceException;
 	
 	void update(Animal animal) throws ServiceException;
+	
+	void addAnimal(String name, String desc, String content, String logo, int countCO2) throws ServiceException;
 }

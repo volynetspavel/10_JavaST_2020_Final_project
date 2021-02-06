@@ -8,16 +8,15 @@ import com.volynets.edem.controller.command.JspPath;
 import com.volynets.edem.exception.ServiceException;
 
 /**
- * This class is used to visit page for adding new action.
+ * This class is used to visit page for adding new animal.
  * 
  * @author Pavel Volynets
  * @version 1.0
  */
-public class VisitAddActionCommand implements Command {
+public class VisitAddAnimalCommand implements Command {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-		return JspPath.ADD_ACTION.getUrl();
+		return JspPath.ADD_ANIMAL.getUrl();
 	}
-
 }

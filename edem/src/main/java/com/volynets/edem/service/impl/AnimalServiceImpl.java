@@ -13,6 +13,7 @@ import com.volynets.edem.dao.CommentDao;
 import com.volynets.edem.dao.UsageDao;
 import com.volynets.edem.dao.UserDao;
 import com.volynets.edem.dao.transaction.EntityTransaction;
+import com.volynets.edem.entity.Action;
 import com.volynets.edem.entity.Animal;
 import com.volynets.edem.entity.User;
 import com.volynets.edem.exception.DaoException;
@@ -123,4 +124,24 @@ public class AnimalServiceImpl extends AbstractService implements AnimalService 
 		}
 	}
 
+	@Override
+	public void addAnimal(String name, String desc, String content, String logo, int countCO2) throws ServiceException {
+		Connection connection = ConnectionPool.getInstance().takeConnection();
+		animalDao.setConnection(connection);
+		
+		Animal animal = new Animal();
+		animal.setName(name);
+		animal.setDesc(desc);
+		animal.setContent(content);
+		animal.setLogo(logo);
+		animal.setCo2(countCO2);
+		
+		try {
+			animalDao.insert(animal);
+		} catch (DaoException e) {
+			throw new ServiceException(e);
+		} finally {
+			ConnectionPool.getInstance().returnConnection(connection);
+		}
+	}
 }

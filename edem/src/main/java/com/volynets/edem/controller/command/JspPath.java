@@ -24,7 +24,8 @@ public enum JspPath {
 	VIEW_ACCOUNTS("/jsp/admin/view_accounts.jsp"),
 		
     REGISTRATION("/jsp/registration.jsp"),
-    ADD_ACTION("/jsp/admin/add_action.jsp");
+    ADD_ACTION("/jsp/admin/add_action.jsp"),
+	ADD_ANIMAL("/jsp/admin/add_animal.jsp");
 
     private String url;
 
