@@ -5,9 +5,6 @@
 <fmt:setBundle basename="text" />
 
 <fmt:message key="breadcrumbs.about" var="about" />
-<fmt:message key="breadcrumbs.account" var="account" />
-<fmt:message key="breadcrumbs.contacts" var="contacts" />
-<fmt:message key="breadcrumbs.suggestion" var="suggestion" />
 <fmt:message key="breadcrumbs.view_actions" var="view_actions" />
 <fmt:message key="breadcrumbs.view_animals" var="view_animals" />
 
@@ -28,18 +25,6 @@
 		<form action="about" method="post">
 			<input type="hidden" name="command" value="about" /> 
 			<input type="submit" name="submit" value="${about }" class="button" />
-		</form>
-	</li>
-	<li>
-		<form action="suggestion" method="post">
-			<input type="hidden" name="command" value="suggestion" /> 
-			<input type="submit" name="submit" value="${suggestion }" class="button" />
-		</form>
-	</li>
-	<li>
-		<form action="contacts" method="post">
-			<input type="hidden" name="command" value="contacts" /> 
-			<input type="submit" name="submit" value="${contacts }" class="button" />
 		</form>
 	</li>
 </ul>

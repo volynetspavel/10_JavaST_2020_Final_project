@@ -31,7 +31,7 @@
 	<section class="row">
 		<div id="mainContent" class="large-10 columns" style="min-height: 600px;">
 			<div class="article thumbnail">
-				<img src="./.${logo}" alt="${title}" />
+				<img src="./.${logo}" alt="${title}" width="650" height="425"/>
 				<div class="data">
 					<%-- ----------------------------------------- action content ----------------------------------------- --%>
 					<h3>${title}</h3>
