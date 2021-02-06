@@ -36,8 +36,8 @@
 		</form>
 	</li>
 	<li>
-		<form action="add_animal" method="post">
-			<input type="hidden" name="command" value="add_animal" /> 
+		<form action="visit_add_animal" method="post">
+			<input type="hidden" name="command" value="visit_add_animal" /> 
 			<input type="submit" name="submit" value="${add_animal }" class="button" />
 		</form>
 	</li>
