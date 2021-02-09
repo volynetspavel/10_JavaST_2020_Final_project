@@ -25,7 +25,7 @@
 		<div class="user-icon"></div>
 		<div class="pass-icon"></div>
 
-		<form name="login-form" class="login-form" action="sign_in" method="post">
+		<form name="login-form" class="login-form" action="about" method="post">
 			<input type="hidden" name="command" value="sign_in" />
 			<div class="header">
 				<h1>${autorization}</h1>

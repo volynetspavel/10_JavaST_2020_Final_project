@@ -64,12 +64,12 @@
 									</form>
 								</c:when>
 								<c:otherwise>
-									<form name="login-form" class="login-form" action="update_action" method="post">
+									<form name="login-form" class="login-form" action="view_actions" method="post">
 										<input type="hidden" name="command" value="update_action" /> 
 										<input type="hidden" name="id_action" value="${action.id}" /> 
 										<input type="submit" name="submit" value="${update}" class="button" />
 									</form>
-									<form name="login-form" class="login-form" action="delete_action" method="post">
+									<form name="login-form" class="login-form" action="view_actions" method="post">
 										<input type="hidden" name="command" value="delete_action" /> 
 										<input type="hidden" name="id_action" value="${action.id}" /> 
 										<input type="submit" name="submit" value="${delete}" class="button" />

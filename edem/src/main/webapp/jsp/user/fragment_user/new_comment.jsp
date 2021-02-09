@@ -14,7 +14,7 @@
 	</div>
 	
 		<div class="media-object-section" style="width: 100%;">
-			<form action="add_comment" method="post">
+			<form action="watch_action" method="post">
 				<input type="hidden" name="command" value="add_comment">
 				<textarea id="comment-content" name="comment_content" placeholder="${new_comment}"></textarea>
 				<input type="hidden" name="id_action" value="${id}" /> 				

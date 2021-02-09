@@ -55,7 +55,7 @@
 							<hr>
 							<p>${animal.content}</p>
 							<c:if test="${sessionScope.user.role eq 'USER'}">
-								<form name="login-form" class="login-form" action="take_animal" method="post">
+								<form name="login-form" class="login-form" action="view_animals" method="post">
 									<input type="hidden" name="command" value="take_animal" /> 
 									<input type="hidden" name="id_animal" value="${animal.id}" /> 
 									<input type="submit" name="submit" value="${add}" class="button" /></br>
@@ -64,12 +64,12 @@
 								</form>
 							</c:if>
 							<c:if test="${sessionScope.user.role eq 'ADMINISTRATOR'}">
-								<form name="login-form" class="login-form" action="update_animal" method="post">
+								<form name="login-form" class="login-form" action="view_animals" method="post">
 									<input type="hidden" name="command" value="update_animal" /> 
 									<input type="hidden" name="id_animal" value="${animal.id}" />
 									<input type="submit" name="submit" value="${update}" class="button" />
 								</form>
-								<form name="login-form" class="login-form" action="delete_animal" method="post">
+								<form name="login-form" class="login-form" action="view_animals" method="post">
 									<input type="hidden" name="command" value="delete_animal" /> 
 									<input type="hidden" name="id_animal" value="${animal.id}" />
 									<input type="submit" name="submit" value="${delete}" class="button" />

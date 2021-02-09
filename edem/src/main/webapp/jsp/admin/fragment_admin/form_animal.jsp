@@ -15,7 +15,7 @@
 <div class="callout">
 	<h3 class="text-center">${add_new_animal}</h3>
 	<hr />
-	<form animal="add_animal" method="post" data-abide novalidate class="contact-form" enctype="multipart/form-data">
+	<form action="visit_add_animal" method="post" data-abide novalidate class="contact-form" enctype="multipart/form-data">
 		<input type="hidden" name="command" value="add_animal" /> 
 		<div class="row">
 			<div class="small-12 medium-8 columns small-centered">

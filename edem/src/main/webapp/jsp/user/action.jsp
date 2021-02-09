@@ -31,10 +31,13 @@
 	<section class="row">
 		<div id="mainContent" class="large-10 columns" style="min-height: 600px;">
 			<div class="article thumbnail">
-				<img src="./.${logo}" alt="${title}" width="650" height="425"/>
+				<figure style="text-align: center">
+					<img src="./.${logo}" alt="${title}" width="650" height="425"/>
+				</figure>
 				<div class="data">
 					<%-- ----------------------------------------- action content ----------------------------------------- --%>
 					<h3>${title}</h3>
+					<input type="hidden" name="id_action" value="${id_action}">
 					<ul class="vertical large-horizontal menu">
 						<li><i class="fi-eye"></i>${impact} -${co2} CO2</li>
 						<li><i class="fi-comments"></i>${count_comments} ${comments}</li>
@@ -42,7 +45,7 @@
 					<hr />
 					
 					<div class="content">${content }</div>
-					<form name="login-form" class="login-form" action="take_action" method="post">
+					<form name="login-form" class="login-form" action="watch_action" method="post">
 						<input type="hidden" name="command" value="take_action" />  
 						<input type="hidden" name="title_action" value="${title}" /> 
 						<input type="submit" name="submit" value="${take}" class="button" />

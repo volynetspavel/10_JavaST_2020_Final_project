@@ -43,7 +43,15 @@ public class WatchActionCommand implements Command {
 		ActionService actionService = serviceFactory.getActionService();
 		CommentService commentService = serviceFactory.getCommentService();
 
-		int idAction = Integer.parseInt(request.getParameter(ID_ACTION));
+		int idAction;
+		if (request.getParameter(ID_ACTION) != null) {
+			idAction = Integer.parseInt(request.getParameter(ID_ACTION));
+		} else {
+			idAction = (Integer) request.getSession().getAttribute(ID_ACTION);
+		}
+		
+		request.getSession().setAttribute(ID_ACTION, idAction);
+		
 		Action action = actionService.findById(idAction);
 		request.setAttribute(LOGO, action.getLogo());
 		request.setAttribute(TITLE, action.getTitle());
@@ -60,5 +68,4 @@ public class WatchActionCommand implements Command {
 		LOGGER.info("User " + user.getEmail() + " was watching action " + action.getTitle());
 		return JspPath.ACTION.getUrl();
 	}
-
 }

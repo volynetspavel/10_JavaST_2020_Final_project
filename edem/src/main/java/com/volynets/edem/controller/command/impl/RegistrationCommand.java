@@ -94,7 +94,7 @@ public class RegistrationCommand implements Command {
 					request.getSession().setAttribute(USER, user);
 
 					LOGGER.info("New user registered. Email - " + user.getEmail());
-					page = JspPath.HOME_USER.getUrl();
+					page = JspPath.ABOUT.getUrl();
 				} else {
 					fail = true;
 					page = JspPath.REGISTRATION.getUrl();

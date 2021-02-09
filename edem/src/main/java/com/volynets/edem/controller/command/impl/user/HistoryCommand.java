@@ -35,7 +35,7 @@ public class HistoryCommand implements Command {
 	private static final String ANIMAL_CO2 = "animal_co2";
 	private static final String TOTAL_CO2 = "total_co2";
 	private static final String LIST_ACTIONS = "list_actions";
-
+	private static final String ERROR = "error";
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
@@ -51,16 +51,20 @@ public class HistoryCommand implements Command {
 		
 		Animal animal = animalService.findById(idAnimalInTableByUserId);
 		
-		request.setAttribute(LOGO, animal.getLogo());
-		request.setAttribute(NAME, animal.getName());
-		request.setAttribute(DESCRIPTION, animal.getDesc());
-		request.setAttribute(CONTENT, animal.getContent());
-		request.setAttribute(ANIMAL_CO2, animal.getCo2());
-		request.setAttribute(TOTAL_CO2, serviceFactory);
-		request.setAttribute(TOTAL_CO2, totalCO2);
-		
-		List<Action> actions = usageService.findActionsByUserId(idUser);
-		request.setAttribute(LIST_ACTIONS, actions);
+		if (animal != null) {
+			request.setAttribute(LOGO, animal.getLogo());
+			request.setAttribute(NAME, animal.getName());
+			request.setAttribute(DESCRIPTION, animal.getDesc());
+			request.setAttribute(CONTENT, animal.getContent());
+			request.setAttribute(ANIMAL_CO2, animal.getCo2());
+			request.setAttribute(TOTAL_CO2, totalCO2);
+			
+			List<Action> actions = usageService.findActionsByUserId(idUser);
+			request.setAttribute(LIST_ACTIONS, actions);
+		} else {
+			request.setAttribute(ERROR, "You didn't choose an animal.");
+		}
+
 		
 		LOGGER.info("User " + emailString + " watched history of account.");
 		return JspPath.HISTORY.getUrl();

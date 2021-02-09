@@ -41,6 +41,7 @@
 				<div class="data">
 					<figure style="text-align: center">
 						<h4>${animal_name}</h4>
+						<h2><span class="header" style="color: red;">${error}</span></h2>
 					</figure>
 					<hr>
 					<div class="content">
