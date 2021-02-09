@@ -76,6 +76,9 @@ public class CommentServiceImpl extends AbstractService implements CommentServic
 			comment.setAction(action);
 			
 			commentDao.insert(comment);
+			
+			int comments = commentDao.findByActionId(idAction).size();
+			actionDao.updateComments(idAction, comments);
 
 			transaction.commit();
 		} catch (DaoException e) {

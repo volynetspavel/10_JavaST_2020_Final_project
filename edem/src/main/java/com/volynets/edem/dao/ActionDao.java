@@ -11,4 +11,6 @@ import com.volynets.edem.exception.DaoException;
  */
 public abstract class ActionDao extends AbstractDao<Action> {
 	public abstract Action findByTitle(String title) throws DaoException;
+
+	public abstract void updateComments(int idAction, int countComments) throws DaoException;
 }

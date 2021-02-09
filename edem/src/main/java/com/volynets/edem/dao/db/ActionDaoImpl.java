@@ -30,6 +30,8 @@ public class ActionDaoImpl extends ActionDao {
 	private static final String SQL_INSERT_ACTION = "INSERT into action "
 			+ "(`title`,`desc`,`content`,`logo`,`comment`,`co2`) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String SQL_FIND_ACTION_BY_TITLE = "SELECT * FROM action WHERE title=?";
+	private static final String SQL_UPDATE_ACTION_COMMENTS = "UPDATE action "
+			+ "SET `comment`= ? WHERE id=?";
 
 	@Override
 	public void insert(Action entity) throws DaoException {
@@ -182,5 +184,22 @@ public class ActionDaoImpl extends ActionDao {
 		closeResultSet(resultSet);
 		closePreparedStatement(preparedStatement);
 		return action;
+	}
+	
+	@Override
+	public void updateComments(int idAction, int countComments) throws DaoException {
+		PreparedStatement preparedStatement = null;
+
+		try {
+			preparedStatement = connection.prepareStatement(SQL_UPDATE_ACTION_COMMENTS);
+			preparedStatement.setInt(1, countComments);
+			preparedStatement.setInt(2, idAction);
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			closePreparedStatement(preparedStatement);
+		}
 	}
 }
