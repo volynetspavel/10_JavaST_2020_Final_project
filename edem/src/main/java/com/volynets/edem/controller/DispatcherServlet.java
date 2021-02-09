@@ -29,8 +29,8 @@ import com.volynets.edem.exception.ServiceException;
  */
 @WebServlet(urlPatterns = { "/sign_in", "/sign_out", "/view_actions", "/view_accounts", "/watch_action",
 		"/view_animals", "/take_action", "/visit_registration", "/registration", "/language", "/delete_account",
-		"/delete_action", "/delete_animal", "/take_animal", "/visit_add_action",  "/visit_add_animal", 
-		"/add_action", "/add_animal", "/add_comment", "/about", "/account", "/history"})
+		"/delete_action", "/delete_animal", "/take_animal", "/visit_add_action", "/visit_add_animal", "/add_action",
+		"/add_animal", "/add_comment", "/about", "/account", "/history", })
 @MultipartConfig
 public class DispatcherServlet extends HttpServlet {
 	private static final Logger LOGGER = LogManager.getLogger(DispatcherServlet.class);
@@ -70,10 +70,16 @@ public class DispatcherServlet extends HttpServlet {
 				Command command = commandFactory.receiveCommand(request.getParameter(COMMAND));
 				page = command.execute(request, response);
 			} else {
-				LOGGER.error("Command not received");
-				request.setAttribute(ERROR, "Command not received");
-				request.setAttribute(STATUS_CODE, 404);
-				page = JspPath.ERROR.getUrl();
+				if (request.getServletPath().replaceAll("/", "") != null) {
+					LOGGER.info("Request. Command from path = " + request.getServletPath().replaceAll("/", ""));
+					Command command = commandFactory.receiveCommand(request.getServletPath().replaceAll("/", ""));
+					page = command.execute(request, response);
+				} else {
+					LOGGER.error("Command not received");
+					request.setAttribute(ERROR, "Command not received");
+					request.setAttribute(STATUS_CODE, 404);
+					page = JspPath.ERROR.getUrl();
+				}
 			}
 		} catch (ServiceException e) {
 			LOGGER.error(e.getMessage(), e);
